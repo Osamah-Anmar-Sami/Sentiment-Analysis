@@ -4,4 +4,4 @@ Sentiment analysis is the process of analyzing digital text to determine the emo
 # DataSet
 Arabic DataSet: https://www.kaggle.com/datasets/zeyadzidan/labr-dataset
 
-English DataSet: https://www.kaggle.com/datasets/mwallerphunware/imbd-movie-reviews-for-binary-sentiment-analysis
+English DataSet: https://www.kaggle.com/datasets/atulanandjha/imdb-50k-movie-reviews-test-your-bert?select=test.csv
