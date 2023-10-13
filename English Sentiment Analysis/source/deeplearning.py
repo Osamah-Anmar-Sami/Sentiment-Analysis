@@ -47,10 +47,10 @@ def plot_accuracy_loss(histoty):
            plt.legend()
            return plt.show()
 
-def lstm_(vocab_size, embedding_dim, max_length, dropout):
+def lstm_(vocab_size, embedding_dim, max_length, dropout, units):
             model = tf.keras.Sequential([
                 Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length),
-                LSTM(32, return_sequences=False),
+                LSTM(units=units, return_sequences=False),
                 Dropout(dropout),
                 Dense(1, activation= 'sigmoid')
                 ])     
