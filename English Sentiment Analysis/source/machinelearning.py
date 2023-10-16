@@ -1,6 +1,7 @@
 import pandas as pd
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
-
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+import matplotlib.pyplot as plt
 
 def machine_learning_model(algorithm):
         model = algorithm
@@ -20,3 +21,14 @@ def metrics_values(model, X_test, y_test):
         error = 1-accuracy
         MetricsValues = pd.DataFrame(index=['Accuracy', 'Precision','Recall', 'F1Score', 'Error'], columns=['Values'], data=[accuracy, precision, recall, f1score, error])
         return MetricsValues
+
+def confusion_matrix_(model, X_test, y_test, name):
+        y_pred = model.predict(X_test)
+        confusionmatrix = confusion_matrix(y_pred, y_test)
+        disp = ConfusionMatrixDisplay(confusion_matrix=confusionmatrix, display_labels=['Negative', 'Positive'])
+        disp.plot(cmap='Greens_r', colorbar=False, xticks_rotation='vertical', values_format='d')
+        plt.title('{} Confusion Matrix with Labels'.format(name))
+        plt.rcParams['font.size'] = '10'
+        plt.grid(None)
+        return plt.show()
+        
