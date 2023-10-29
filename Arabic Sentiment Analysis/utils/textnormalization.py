@@ -1,8 +1,6 @@
 import pyarabic.arabrepr
 import re
 import os
-import emoji
-import string
 from camel_tools.utils.dediac import dediac_ar
 from camel_tools.utils.normalize import normalize_unicode
 from camel_tools.utils.normalize import normalize_alef_maksura_ar
@@ -12,7 +10,7 @@ from camel_tools.tokenizers.word import simple_word_tokenize
 import arabicstopwords.arabicstopwords as stp
 import qalsadi.lemmatizer 
 from tashaphyne.stemming import ArabicLightStemmer
-
+from ruqiya import ruqiya
 
 class TextNormalization:
      def __init__(self,_remove_emojis,
@@ -65,27 +63,27 @@ class TextNormalization:
 
      def remove_emojis(self,text):
           "Remove All Emojis From Text"
-          text = emoji.replace_emoji(text, replace="")
+          text = ruqiya.remove_emojis(text)
           return text
 
      def remove_hashtags(self,text):
           "Remove All Hashtags From Text"
-          text =  re.sub("#[ا-ي٠-٩a-zA-Z0-9]+","", text)
+          text =  remove_hashtags(text)
           return text   
 
      def remove_emails(self,text):
           "Remove All Emails From Text"
-          text = re.sub("[a-zA-Z0-9-_.]+@[a-zA-Z]+.[a-zA-Z]+","", text)  
+          text = ruqiya.remove_emails(text)
           return text    
 
      def remove_url(self,text):
           "Remove All URL From Text"
-          text = re.sub(r'http\S+', '', text, flags=re.MULTILINE)
+          text = ruqiya.remove_URLs(text)
           return text
 
      def remove_mention(self,text):
           "Remove All Mention From Text"
-          text = re.sub("@[ا-ي٠-٩a-zA-Z0-9]+","", text)
+          text = ruqiya.remove_mentions(text)
           return text
 
      def remove_duplicate_char(self,text):
@@ -100,9 +98,7 @@ class TextNormalization:
 
      def remove_special_character_(self,text):
           "Remove Special Character From Text"
-          Punctuations = '`؛،؟.,«»÷-' + string.punctuation
-          for punctuation in Punctuations:
-               text = text.replace(punctuation, ' ')
+          text = ruqiya.remove_punctuations(text)
           return text   
 
      def remove_new_line_char(self,text):
