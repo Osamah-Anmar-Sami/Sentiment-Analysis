@@ -2,6 +2,6 @@
 Sentiment analysis is the process of analyzing digital text to determine the emotional tone of the message. Today, companies have large volumes of text data like emails, customer support chat transcripts, social media comments, and reviews.
 
 # DataSet
-Arabic DataSet: https://www.kaggle.com/datasets/zeyadzidan/labr-dataset
+Arabic DataSet: https://www.kaggle.com/datasets/mohamedalisalama/arabic-companies-reviews-for-sentiment-analysis
 
 English DataSet: https://www.kaggle.com/datasets/atulanandjha/imdb-50k-movie-reviews-test-your-bert?select=test.csv
