@@ -68,7 +68,7 @@ class TextNormalization:
 
      def remove_hashtags(self,text):
           "Remove All Hashtags From Text"
-          text =  remove_hashtags(text)
+          text =  ruqiya.remove_hashtags(text)
           return text   
 
      def remove_emails(self,text):

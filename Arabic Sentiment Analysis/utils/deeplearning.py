@@ -4,19 +4,20 @@ from tensorflow import *
 from keras.preprocessing import *
 import matplotlib.pyplot as plt
 
-def convolutional_neural_network_1d(vocab_size, embedding_dim, max_length, dropout, filters, kernel):
+def convolutional_neural_network_1d(vocab_size, embedding_dim, max_length, dropout, filters, kernel, strides, padding):
             model = tf.keras.Sequential([
                 Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length),
-                Conv1D(filters=filters, kernel_size = kernel, activation='relu'),
+                Conv1D(filters=filters, kernel_size = kernel, activation='relu', strides = strides, padding = padding),
                 GlobalAveragePooling1D(),
                 Dropout(dropout),
-                Dense(1, activation= 'sigmoid')
+                Dense(32, activation= 'relu'),
+                Dense(3, activation= 'softmax')
                 ])     
             return model
     
 def model_compile(model) :
         return model.compile(optimizer='adam',
-              loss='binary_crossentropy',
+              loss='categorical_crossentropy',
               metrics=['accuracy'])
     
 
@@ -53,7 +54,8 @@ def lstm_(vocab_size, embedding_dim, max_length, dropout, units):
                 Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length),
                 LSTM(units=units, return_sequences=False),
                 Dropout(dropout),
-                Dense(1, activation= 'sigmoid')
+                # Dense(32, activation= 'relu'),
+                Dense(3, activation= 'softmax')
                 ])     
             return model  
 
@@ -62,6 +64,7 @@ def gru_(vocab_size, embedding_dim, max_length, dropout, units):
                 Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length),
                 GRU(units=units, return_sequences=False),
                 Dropout(dropout),
-                Dense(1, activation= 'sigmoid')
+                # Dense(32, activation= 'relu'),
+                Dense(3, activation= 'softmax')
                 ])     
             return model  

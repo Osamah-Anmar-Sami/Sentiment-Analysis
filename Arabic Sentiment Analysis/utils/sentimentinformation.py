@@ -5,7 +5,7 @@ def sentiment_percentage(data, target, figsize):
     fig, ax = plt.subplots(figsize = figsize)
     ax.pie(data[target].value_counts(), 
        labels=data[target].unique(),
-       colors=['#96ceb4','#ffeead'], 
+       colors=['#4F6272', '#B7C3F3', '#DD7596'], 
        autopct='%1.1f%%',
        textprops = {'size': 'large'})
     plt.title('{} Percentage'.format(target))
@@ -13,7 +13,7 @@ def sentiment_percentage(data, target, figsize):
 
 def sentiment_counts(data, target, figsize):
     ax, fig = plt.subplots(figsize = figsize)
-    ax =sns.countplot(x=target, data=data, dodge=False, hue=target,  order= data[target].value_counts().index, hue_order =data[target].value_counts().index,  palette=['#ff6f69', '#ffcc5c'], legend='full');
+    ax =sns.countplot(x=target, data=data, dodge=False, hue=target,  order= data[target].value_counts().index, hue_order =data[target].value_counts().index,  palette=['tomato', 'cornflowerblue', 'gold',], legend='full');
     ax.set(xticklabels=[]) 
     ax.set(ylabel=None) 
     plt.title('{} Count'.format(target))
