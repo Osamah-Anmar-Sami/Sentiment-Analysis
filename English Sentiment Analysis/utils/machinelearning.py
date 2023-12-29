@@ -15,9 +15,9 @@ def fit_model(model, X_train, y_train):
 def metrics_values(model, X_test, y_test):
         y_pred = model.predict(X_test)
         accuracy = accuracy_score(y_test, y_pred)
-        f1score = f1_score(y_test, y_pred, average = 'macro')
-        precision = precision_score(y_test, y_pred, average = 'macro')
-        recall = recall_score(y_test, y_pred, average = 'macro')
+        f1score = f1_score(y_test, y_pred)
+        precision = precision_score(y_test, y_pred)
+        recall = recall_score(y_test, y_pred)
         error = 1-accuracy
         MetricsValues = pd.DataFrame(index=['Accuracy', 'Precision','Recall', 'F1Score', 'Error'], columns=['Values'], data=[accuracy, precision, recall, f1score, error])
         return MetricsValues
@@ -25,7 +25,7 @@ def metrics_values(model, X_test, y_test):
 def confusion_matrix_(model, X_test, y_test, name):
         y_pred = model.predict(X_test)
         confusionmatrix = confusion_matrix(y_pred, y_test)
-        disp = ConfusionMatrixDisplay(confusion_matrix=confusionmatrix, display_labels=['Negative', 'Positive'])
+        disp = ConfusionMatrixDisplay(confusion_matrix=confusionmatrix, display_labels=['Positive', 'Negative'])
         disp.plot(cmap='YlGnBu_r', colorbar=False, xticks_rotation='vertical', values_format='d')
         plt.title('{} Confusion Matrix with Labels'.format(name))
         plt.rcParams['font.size'] = '10'
