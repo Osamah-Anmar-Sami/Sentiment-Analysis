@@ -4,31 +4,55 @@ from tensorflow import *
 from keras.preprocessing import *
 import matplotlib.pyplot as plt
 
-def convolutional_neural_network_1d(vocab_size, embedding_dim, max_length, dropout, filters, kernel, strides, padding):
+def convolutional_neural_network_1d(vocab_size, embedding_dim, max_length, dropout, filters, kernel, strides, padding, embeddings_matrix, units_):
             model = tf.keras.Sequential([
                 Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length),
                 Conv1D(filters=filters, kernel_size = kernel, activation='relu', strides = strides, padding = padding),
                 GlobalAveragePooling1D(),
                 Dropout(dropout),
-                Dense(32, activation= 'relu'),
+                BatchNormalization(),
+                Dense(units_, activation= 'relu'),
+                BatchNormalization(),
                 Dense(3, activation= 'softmax')
                 ])     
             return model
+
+def lstm_(vocab_size, embedding_dim, max_length, dropout, units, embeddings_matrix, units_):
+            model = tf.keras.Sequential([
+                Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length),
+                LSTM(units=units, return_sequences=False),
+                Dropout(dropout),
+                BatchNormalization(),
+                Dense(units_, activation= 'relu'),
+                BatchNormalization(),
+                Dense(3, activation= 'softmax')
+                ])     
+            return model  
+
+def gru_(vocab_size, embedding_dim, max_length, dropout, units, embeddings_matrix, units_):
+            model = tf.keras.Sequential([
+                Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length),
+                GRU(units=units, return_sequences=False),
+                Dropout(dropout),
+                BatchNormalization(),
+                Dense(units_, activation= 'relu'),
+                BatchNormalization(),
+                Dense(3, activation= 'softmax')
+                ])     
+            return model  
+
     
 def model_compile(model) :
-        return model.compile(optimizer='adam',
-              loss='categorical_crossentropy',
+        return model.compile(optimizer=tf.keras.optimizers.legacy.RMSprop(learning_rate=0.001),
+              loss=tf.keras.losses.CategoricalHinge(),
               metrics=['accuracy'])
     
-
-
-def model_fit(model, X_train, y_train, epochs, X_test, y_test, batch_size, Callback, shuffle):
+def model_fit(model, X_train, y_train, epochs, X_test, y_test, batch_size, Callback):
             history = model.fit(X_train, y_train,
                     epochs=epochs,
                     validation_data=(X_test, y_test),
                     batch_size=batch_size,
-                    callbacks=[Callback ],
-                     shuffle=shuffle)
+                    callbacks=[Callback ])
             return history
     
 def evaluate(model, x, y, train_test):
@@ -49,22 +73,3 @@ def plot_accuracy_loss(histoty):
            plt.legend()
            return plt.show()
 
-def lstm_(vocab_size, embedding_dim, max_length, dropout, units):
-            model = tf.keras.Sequential([
-                Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length),
-                LSTM(units=units, return_sequences=False),
-                Dropout(dropout),
-                # Dense(32, activation= 'relu'),
-                Dense(3, activation= 'softmax')
-                ])     
-            return model  
-
-def gru_(vocab_size, embedding_dim, max_length, dropout, units):
-            model = tf.keras.Sequential([
-                Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length),
-                GRU(units=units, return_sequences=False),
-                Dropout(dropout),
-                # Dense(32, activation= 'relu'),
-                Dense(3, activation= 'softmax')
-                ])     
-            return model  

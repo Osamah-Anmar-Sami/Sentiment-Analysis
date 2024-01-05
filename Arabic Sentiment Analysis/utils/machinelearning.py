@@ -25,7 +25,7 @@ def metrics_values(model, X_test, y_test):
 def confusion_matrix_(model, X_test, y_test, name):
         y_pred = model.predict(X_test)
         confusionmatrix = confusion_matrix(y_pred, y_test)
-        disp = ConfusionMatrixDisplay(confusion_matrix=confusionmatrix, display_labels=['Negative', 'Positive', 'Neutral'])
+        disp = ConfusionMatrixDisplay(confusion_matrix=confusionmatrix, display_labels=['Positive', 'Negative', 'Neutral'])
         disp.plot(cmap='YlGnBu_r', colorbar=False, xticks_rotation='vertical', values_format='d')
         plt.title('{} Confusion Matrix with Labels'.format(name))
         plt.rcParams['font.size'] = '10'
