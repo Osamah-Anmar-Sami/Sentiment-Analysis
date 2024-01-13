@@ -4,10 +4,10 @@ import seaborn as sns
 def sentiment_percentage(data, target, figsize):
     fig, ax = plt.subplots(figsize = figsize)
     ax.pie(data[target].value_counts(), 
-       labels=data[target].unique(),
-       colors=['#4F6272', '#B7C3F3', '#DD7596'], 
-       autopct='%1.1f%%',
-       textprops = {'size': 'large'})
+            labels=data[target].unique(),
+            colors=['#4F6272', '#B7C3F3', '#DD7596'], 
+            autopct='%1.1f%%',
+            textprops = {'size': 'large'})
     plt.title('{} Percentage'.format(target))
     return plt.show()
 

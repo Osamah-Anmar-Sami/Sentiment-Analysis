@@ -11,6 +11,7 @@ import arabicstopwords.arabicstopwords as stp
 import qalsadi.lemmatizer 
 from tashaphyne.stemming import ArabicLightStemmer
 from ruqiya import ruqiya
+from nltk.stem.snowball import SnowballStemmer
 
 class TextNormalization:
      def __init__(self,_remove_emojis,
@@ -182,8 +183,8 @@ class TextNormalization:
           return text
 
      def stemmer_(self, text):
-          stem = ArabicLightStemmer()
-          text = " ".join([stem.light_stem(word) for word in text.split()])
+          stem = SnowballStemmer(language = 'arabic')
+          text = " ".join([stem.stem(word) for word in text.split()])
           return text
 
      def normalization(self, text):

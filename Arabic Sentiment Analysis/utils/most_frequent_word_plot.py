@@ -1,14 +1,9 @@
-import plotly.express as px
-from plotly import graph_objects as go
-color3 = ['Salmon', 'FireBrick', 'MediumVioletRed', 'Tomato', 'Orange', 'Gold', 'DarkKhaki', 'Lavender', 'Plum', 'LimeGreen', 'MediumSpringGreen', 'Green', 'DeepSkyBlue', 'Aquamarine', 'MediumSlateBlue']
+import matplotlib.pyplot as plt
+from bidi.algorithm import get_display
+from arabic_reshaper import reshape
+import seaborn as sns
 
-def go_figure(data):
-    fig = go.Figure(go.Funnel(
-    y = data['Word'].tolist(),
-    x = data['Count'].tolist(),
-    marker = {"color": color3}))
-    return fig.show()
-
-def bar_plot(data):
-    fig = px.bar(data, y='Word', x='Count',  orientation='h')
-    return fig.show()
+def bar_plot(data, x, y, text):
+    data[text] = [get_display(reshape(label)) for label in data[text]]
+    sns.barplot(data=data, x=x, y=y, width=0.5, palette = sns.color_palette("husl", 15))
+    plt.rcParams['font.family'] = 'Arial'

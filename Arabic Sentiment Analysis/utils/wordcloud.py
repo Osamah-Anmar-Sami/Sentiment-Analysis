@@ -3,8 +3,9 @@ import matplotlib.pyplot as plt
 import arabic_reshaper
 from bidi.algorithm import get_display
 
-def wordcloud(data, target, width, hieght, text):
-    text = str(data[data['Sentiment'] == target][text])
+def wordcloud(data, target, width, hieght, review):
+    df = data[data['Sentiment'] == target]
+    text = " ".join(txt for txt in df[review])
     text = arabic_reshaper.reshape(text)
     text = get_display(text)
     wordcloud = WordCloud(font_path='arial.ttf',background_color='white', mode='RGB',width=width,height=hieght).generate(text)
