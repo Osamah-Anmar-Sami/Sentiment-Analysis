@@ -4,4 +4,4 @@ Sentiment analysis is the process of analyzing digital text to determine the emo
 # DataSet
 Arabic DataSet: https://www.kaggle.com/datasets/mohamedalisalama/arabic-companies-reviews-for-sentiment-analysis
 
-English DataSet: https://www.kaggle.com/datasets/abhinav835485/flipkart-review-dataset
+English DataSet: https://www.kaggle.com/datasets/ilhamfp31/yelp-review-dataset
