@@ -4,64 +4,67 @@ from tensorflow import *
 from keras.preprocessing import *
 import matplotlib.pyplot as plt
 
-def convolutional_neural_network_1d(vocab_size, embedding_dim, max_length, dropout, filters, kernel, strides, padding, embeddings_matrix):
+
+def lstm_(vocab_size, embedding_dim, max_length, dropout1,dropout2, units1, units2, units3, embeddings_matrix):
+        model = tf.keras.Sequential([
+                Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length, weights=[embeddings_matrix],  trainable=False),
+                LSTM(units=units1, return_sequences=True),
+                LSTM(units=units2, return_sequences=False),
+                Dropout(dropout1),
+                BatchNormalization(),
+                Dense(units3, activation='tanh', kernel_regularizer=tf.keras.regularizers.L2(l2=0.001)),
+                Dropout(dropout2),
+                BatchNormalization(),
+                Dense(1, activation= 'sigmoid')
+                ])         
+        return model  
+
+def gru_(vocab_size, embedding_dim, max_length, dropout1,dropout2, units1, units2, units3, embeddings_matrix):
+        model = tf.keras.Sequential([
+                Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length,  weights=[embeddings_matrix],  trainable=False),
+                GRU(units=units1, return_sequences=True),
+                GRU(units=units2, return_sequences=False),
+                Dropout(dropout1),
+                BatchNormalization(),
+                Dense(units3, activation='tanh', kernel_regularizer=tf.keras.regularizers.L2(l2=0.001)),
+                Dropout(dropout2),
+                BatchNormalization(),
+                Dense(1, activation= 'sigmoid')
+                ])         
+        return model 
+
+
+def bidirectional_lstm(vocab_size, embedding_dim, max_length, dropout1,dropout2, units1, units2, units3, embeddings_matrix):
             model = tf.keras.Sequential([
                 Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length,  weights=[embeddings_matrix],  trainable=False),
-                Conv1D(filters=filters, kernel_size = kernel, activation='relu', strides = strides, padding = padding),
-                GlobalAveragePooling1D(),
-                Dropout(dropout),
-                Dense(10, activation='relu'),
+                Bidirectional(LSTM(units1, return_sequences=True)),
+                Bidirectional(LSTM(units2, return_sequences=False)),
+                Dropout(dropout1),
+                BatchNormalization(),
+                Dense(units3, activation='tanh', kernel_regularizer=tf.keras.regularizers.L2(l2=0.001)),
+                Dropout(dropout2),
+                BatchNormalization(),
                 Dense(1, activation= 'sigmoid')
-                ])     
-            return model
-    
+                ])       
+            return model  
+
+
 def model_compile(model) :
-        return model.compile(optimizer='adam',
-              loss='binary_crossentropy',
-              metrics=['accuracy'])
+        lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
+                initial_learning_rate=0.001,
+                decay_steps=10000,
+                decay_rate=0.9)
+
+                # staircase
+
+        return model.compile(optimizer=tf.keras.optimizers.legacy.Adam(learning_rate=lr_schedule),
+                            loss='binary_crossentropy',
+                            metrics=['accuracy'])
     
-def model_fit(model, X_train, y_train, epochs, X_test, y_test, batch_size, Callback):
+def model_fit(model, X_train, y_train, epochs, X_test, y_test, batch_size, stop):
             history = model.fit(X_train, y_train,
                     epochs=epochs,
                     validation_data=(X_test, y_test),
                     batch_size=batch_size,
-                    callbacks=[Callback ],)
+                    callbacks=[stop])
             return history
-    
-def evaluate(model, x, y, train_test):
-           loss, accuracy = model.evaluate(x, y, verbose=False)
-           print(" ")
-           print('The {} Loss is {:.4f}, And {} Accuracy is {:.4f}'.format(train_test, loss, train_test, accuracy))
-
-def plot_accuracy_loss(histoty):
-           accuracy = histoty.history['accuracy']
-           loss = histoty.history['loss']  
-           val_accuracy = histoty.history['val_accuracy']
-           val_loss = histoty.history['val_loss']
-
-           plt.plot(accuracy, label='Accuracy')
-           plt.plot(loss, label='Loss')
-           plt.plot(val_accuracy, label='Val_Accuracy')
-           plt.plot(val_loss, label='Val_Loss')
-           plt.legend()
-           return plt.show()
-
-def lstm_(vocab_size, embedding_dim, max_length, dropout, units, embeddings_matrix):
-            model = tf.keras.Sequential([
-                Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length,  weights=[embeddings_matrix],  trainable=False),
-                LSTM(units=units, return_sequences=False),
-                Dropout(dropout),
-                Dense(10, activation='relu'),
-                Dense(1, activation= 'sigmoid')
-                ])     
-            return model  
-
-def gru_(vocab_size, embedding_dim, max_length, dropout, units, embeddings_matrix):
-            model = tf.keras.Sequential([
-                Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length,weights=[embeddings_matrix],  trainable=False),
-                GRU(units=units, return_sequences=False),
-                Dropout(dropout),
-                Dense(10, activation='relu'),
-                Dense(1, activation= 'sigmoid')
-                ])     
-            return model  
