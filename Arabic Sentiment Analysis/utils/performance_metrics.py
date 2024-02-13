@@ -23,15 +23,7 @@ def error_rate(True_Positive, True_Negative, False_Positive, False_Negative):
         Error = ((False_Positive + False_Negative) / (True_Positive + True_Negative + False_Positive + False_Negative)) 
         return Error 
 
-def false_negative_rate(True_Positive, False_Negative):
-        FalseNegativeRate = (False_Negative) / (False_Negative + True_Positive)
-        return FalseNegativeRate 
-
-def false_positive_rate(False_Positive, True_Negative):
-        FalsePositiveRate = (False_Positive) / (False_Positive + True_Negative)
-        return FalsePositiveRate 
-
-def performance_metrics_data_frame(Accuracy, Precision, Sensitivity,  Specificity, F1Score, Error, False_Negative_Rate, False_Positive_Rate):
-        MetricsValues = pd.DataFrame(columns=['Values'], index = ['Accuracy', 'Precision', 'Sensitivity', 'Specificity', 'F1Score', 'Error', 'False Negative Rate', 'False Positive Rate'], data=[Accuracy, Precision, Sensitivity,  Specificity, F1Score, Error, False_Negative_Rate, False_Positive_Rate])
+def performance_metrics_data_frame(Accuracy, Precision, Sensitivity,  Specificity, F1Score, Error):
+        MetricsValues = pd.DataFrame(columns=['Values'], index = ['Accuracy', 'Precision', 'Sensitivity', 'Specificity', 'F1Score', 'Error'], data=[Accuracy, Precision, Sensitivity,  Specificity, F1Score, Error])
         return MetricsValues
 

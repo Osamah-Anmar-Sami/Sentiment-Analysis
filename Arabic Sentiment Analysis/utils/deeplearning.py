@@ -5,36 +5,36 @@ from keras.preprocessing import *
 import matplotlib.pyplot as plt
 
 
-def lstm_(vocab_size, embedding_dim, max_length, dropout, units, embeddings_matrix, units_):
+def lstm_(vocab_size, embedding_dim, max_length, dropout, units1, embeddings_matrix, units2):
             model = tf.keras.Sequential([
-                Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length),
-                LSTM(units=units_),
+                Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length,   weights=[embeddings_matrix]),
+                LSTM(units=units1),
                 Dense(64, activation= 'relu'),
                 Dropout(dropout),
-                Dense(units_, activation= 'relu'),
+                Dense(units2, activation= 'relu'),
                 Dense(3, activation= 'softmax')
                 ])     
             return model  
 
-def gru_(vocab_size, embedding_dim, max_length, dropout, units, embeddings_matrix, units_):
+def gru_(vocab_size, embedding_dim, max_length, dropout, units1, embeddings_matrix, units2):
             model = tf.keras.Sequential([
-                Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length),
-                GRU(units=units_),
+                Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length,  weights=[embeddings_matrix]),
+                GRU(units=units1),
                 Dense(64, activation= 'relu'),
                 Dropout(dropout),
-                Dense(units_, activation= 'relu'),
+                Dense(units2, activation= 'relu'),
                 Dense(3, activation= 'softmax')
                 ])     
             return model
 
 
-def bidirectional_lstm(vocab_size, embedding_dim, max_length, dropout, units, embeddings_matrix, units_):
+def bidirectional_lstm(vocab_size, embedding_dim, max_length, dropout, units1, embeddings_matrix, units2):
             model = tf.keras.Sequential([
-                Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length),
-                Bidirectional(LSTM(units=units_)),
+                Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length,   weights=[embeddings_matrix]),
+                Bidirectional(LSTM(units=units1)),
                 Dense(64, activation= 'relu'),
                 Dropout(dropout),
-                Dense(units_, activation= 'relu'),
+                Dense(units2, activation= 'relu'),
                 Dense(3, activation= 'softmax')
                 ])     
             return model  
