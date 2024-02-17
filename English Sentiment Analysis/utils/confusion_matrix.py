@@ -9,7 +9,7 @@ def confusion_matrix_(y_test, y_pred):
 
 def confusion_matrix_display(confusionmatrix, name):
         disp = ConfusionMatrixDisplay(confusion_matrix=confusionmatrix, display_labels=['Positive', 'Negative'])
-        disp.plot(cmap='YlGnBu_r', colorbar=False, xticks_rotation='vertical', values_format='d')
+        disp.plot(cmap='GnBu', colorbar=False, xticks_rotation='vertical', values_format='d')
         plt.title('{} Confusion Matrix'.format(name))
         plt.rcParams['font.size'] = '10'
         plt.grid(None)
