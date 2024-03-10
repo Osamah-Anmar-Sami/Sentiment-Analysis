@@ -8,63 +8,9 @@ import emoji
 import contractions
 from autocorrect import Speller
 import string
-import fasttext
+import langdetect
 
-
-
-
-class TextNormalization:
-     def __init__(self,
-                 string_lower,
-                 remove_emojis,
-                 remove_hashtags,
-                 remove_emails,
-                 remove_URLs,
-                 remove_mentions,
-                 remove_html_tags,
-                 remove_new_line_char,
-                 decrease_number_of_consecutive_reapted_letter,
-                 remove_duplicate_word,
-                 remove_single_letter,
-                 remove_duplicated_letter,
-                 expand_contractions,
-                 remove_stop_words,
-                 remove_unicode_and_special_character,
-                 remove_puncuations,
-                 remove_numbers,
-                 english_spell_coreccter,
-                 remove_non_english,
-                 remove_longest_than,
-                 remove_whitespace,
-                 lemmatize,
-                 stemmer,
-                 ):
-          self.string_lower = string_lower
-          self.remove_emojis = remove_emojis
-          self.remove_hashtags = remove_hashtags
-          self.remove_emails = remove_emails
-          self.remove_URLs = remove_URLs
-          self.remove_mentions = remove_mentions
-          self.remove_html_tags = remove_html_tags
-          self.remove_new_line_char = remove_new_line_char
-          self.decrease_number_of_consecutive_reapted_letter = decrease_number_of_consecutive_reapted_letter
-          self.remove_duplicate_word = remove_duplicate_word
-          self.remove_single_letter = remove_single_letter
-          self.remove_duplicated_letter = remove_duplicated_letter
-          self.expand_contractions = expand_contractions
-          self.remove_stop_words = remove_stop_words
-          self.remove_unicode_and_special_character = remove_unicode_and_special_character
-          self.remove_puncuations = remove_puncuations
-          self.remove_numbers = remove_numbers
-          self.remove_non_english = remove_non_english
-          self.english_spell_coreccter = english_spell_coreccter
-          self.remove_longest_than = remove_longest_than
-          self.remove_whitespace = remove_whitespace
-          self.lemmatize = lemmatize
-          self.stemmer = stemmer
-
-
-     def string_lower_(self,text):
+def string_lower_(text):
           """convert all words into word with lower letter format
 
           Args:
@@ -77,7 +23,7 @@ class TextNormalization:
           text = text.lower()
           return text
 
-     def delete_emojis(self,text):
+def delete_emojis(text):
           """remove all emojis from text
 
           Args:
@@ -89,7 +35,7 @@ class TextNormalization:
           text = emoji.replace_emoji(text, replace="")
           return text
 
-     def delete_hashtags(self,text):
+def delete_hashtags(text):
           """remove all hashtags from text
 
           Args:
@@ -101,7 +47,7 @@ class TextNormalization:
           text =  re.sub("#[ا-ي٠-٩a-zA-Z0-9]+","", text)
           return text   
 
-     def delete_emails(self,text):
+def delete_emails(text):
           """remove all email address from text
 
           Args:
@@ -113,7 +59,7 @@ class TextNormalization:
           text = re.sub("[a-zA-Z0-9-_.]+@[a-zA-Z]+.[a-zA-Z]+"," ", text)  
           return text 
 
-     def delete_url(self,text):
+def delete_url(text):
           """remove all URL from text
 
           Args:
@@ -125,7 +71,7 @@ class TextNormalization:
           text = re.sub(r'http\S+', ' ', text, flags=re.MULTILINE)
           return text
 
-     def delete_mention(self,text):
+def delete_mention(text):
           """remove all mention from text
 
           Args:
@@ -137,7 +83,7 @@ class TextNormalization:
           text = re.sub("@[ا-ي٠-٩a-zA-Z0-9]+"," ", text)
           return text
 
-     def delete_html_tags(self,text):
+def delete_html_tags(text):
           """remove all html tags from text
 
           Args:
@@ -149,7 +95,7 @@ class TextNormalization:
           text = re.sub("<.*?>", ' ', text)
           return text
 
-     def delete_new_line_char(self,text):
+def delete_new_line_char(text):
           """delete new line character from text
 
           Args:
@@ -161,7 +107,7 @@ class TextNormalization:
           text = text.replace('\n', ' ')
           return text 
      
-     def decrease_number_of_consecutive_reapted_letter_(self,text):
+def decrease_number_of_consecutive_reapted_letter_(text):
           """decrease number consecutive characters reapeted more than 2 times in a each word for given text
 
 
@@ -175,7 +121,7 @@ class TextNormalization:
           text = re.sub(r'(.)\1+', r'\1\1', text)
           return text
 
-     def delete_duplicate_word(self,text):
+def delete_duplicate_word(text):
           """delete consecutive duplicate words in a given text
 
           Args:
@@ -188,7 +134,7 @@ class TextNormalization:
           text = re.sub(pattern, r'\1', text)
           return text
      
-     def delete_single_letter(self, text):
+def delete_single_letter( text):
             """
                 removes single letters that aren't part of words from the given text
 
@@ -199,11 +145,11 @@ class TextNormalization:
                    string: the modified text with single letters removed
             """
 
-            pattern = r"\b([a-zA-Z])\b(?!\w)"  
+            pattern = r"\b([b-dfhj-np-tv-z]|[B-DFHJ-NP-TV-Z])\b(?!\w)"  
             text = re.sub(pattern, " ", text)
             return text
      
-     def delete_duplicated_letter(self, text):
+def delete_duplicated_letter( text):
             """
                 removes duplicated letters that aren't part of words from the given text
 
@@ -219,7 +165,7 @@ class TextNormalization:
             return text
 
 
-     def english_spell_correcter_(self, text):
+def english_spell_correcter_( text):
           """correct the spelling of english word
 
           Args:
@@ -232,7 +178,7 @@ class TextNormalization:
           text = spell(text)
           return text
 
-     def expand_contractions_(self,text):
+def expand_contractions_(text):
           """replace contracted forms with their expanded equivalents.
 
           Args:
@@ -244,7 +190,7 @@ class TextNormalization:
           text = contractions.fix(text)
           return text
      
-     def delete_stop_words(self,text):
+def delete_stop_words(text):
           """remove all stopword from text
 
           Args:
@@ -262,8 +208,7 @@ class TextNormalization:
           text = [word for word in text if word not in StopWords]
           return ' '.join(text)
 
-
-     def delete_unicode_and_special_character(self,text):
+def delete_unicode_and_special_character(text):
           """remove special and unicode characters from the text
 
           Args:
@@ -277,7 +222,7 @@ class TextNormalization:
           return text
 
      
-     def delete_punctuations(self,text):
+def delete_punctuations(text):
           """remove punctuation from the text
 
           Args:
@@ -291,7 +236,7 @@ class TextNormalization:
           text = text.translate(Punctuations)
           return text 
 
-     def delete_number(self,text):
+def delete_number(text):
            """remove numbers from the text
 
           Args:
@@ -303,7 +248,7 @@ class TextNormalization:
            text = re.sub(r'\d+', '', text)
            return text
 
-     def delete_non_english(self, text):
+def delete_non_english( text):
             """remove non english words from the text
 
           Args:
@@ -312,14 +257,11 @@ class TextNormalization:
           Returns:
               text: text without non english words
           """ 
-            pretrained_model_path = "lid.176.bin"
-            model = fasttext.load_model(pretrained_model_path)
-            words = text.split() 
-            text = ' '.join(word for word in words if( model.predict(word, k=1)[0][0] == '__label__en') or word in string.punctuation)
+            text = ' '.join(word for word in text.split()  if(langdetect.detect(word) == 'en') or word in string.punctuation)
 
             return text
 
-     def delete_longest_than(self,text):
+def delete_longest_than(text):
         """remove words that has length more than the longest word in english from the text
 
           Args:
@@ -333,7 +275,7 @@ class TextNormalization:
                 text = text.replace(word, '')
         return text
 
-     def delete_whitespace(self,text):
+def delete_whitespace(text):
           """remove extra whitespaces at the beginning and end of the text
 
           Args:
@@ -345,7 +287,7 @@ class TextNormalization:
           text = re.sub(r"\s+", " ", text)
           return text 
 
-     def lemmatizer_(self,text):
+def lemmatizer_(text):
           """applies lemmatization to lower inflections in words, transforming them to their root forms.
 
           Args:
@@ -358,7 +300,7 @@ class TextNormalization:
           text = " ".join([lemmatizer.lemmatize(word, pos='v') for word in text.split()])
           return text
 
-     def stemmer_(self, text):
+def stemmer_( text):
           """applies stemming to lower inflections in words, reducing them to their root forms.
 
           Args:
@@ -372,8 +314,7 @@ class TextNormalization:
           return text
 
 
-
-     def normalization(self, text):
+def normalization(text):
           """normalizes text by applying a series of cleaning and standardization techniques
 
 
@@ -403,51 +344,25 @@ class TextNormalization:
             - Applying stemming.
             """
          
-          if self.string_lower == True:
-               text = self.string_lower_(text)
-          if self.remove_emojis == True:
-               text = self.delete_emojis(text)
-          if self.remove_hashtags == True:
-               text = self.delete_hashtags(text)
-          if self.remove_emails == True:
-               text = self.delete_emails(text)
-          if self.remove_URLs == True:
-               text = self.delete_url(text)
-          if self.remove_mentions == True:
-               text = self.delete_mention(text)
-          if self.remove_new_line_char == True:
-               text = self.delete_new_line_char(text)
-          if self.remove_html_tags == True:
-               text = self.delete_html_tags(text)
-          if self.decrease_number_of_consecutive_reapted_letter == True:
-               text = self.decrease_number_of_consecutive_reapted_letter_(text)
-          if self.remove_duplicate_word == True:
-               text = self.delete_duplicate_word(text)
-          if self.expand_contractions == True:
-               text = self.expand_contractions_(text)
-          if self.remove_stop_words == True:
-               text = self.delete_stop_words(text)
-          if self.remove_unicode_and_special_character == True:
-               text = self.delete_unicode_and_special_character(text)
-          if self.remove_puncuations == True:
-               text = self.delete_punctuations(text)
-          if self.remove_single_letter == True:
-               text = self.delete_single_letter(text)
-          if self.remove_duplicated_letter == True:
-               text = self.delete_duplicated_letter(text)
-          if self.remove_numbers == True:
-               text = self.delete_number(text)
-          if self.english_spell_coreccter == True:
-               text = self.english_spell_correcter_(text)
-          if self.remove_non_english == True:
-               text = self.delete_non_english(text)
-          if self.remove_longest_than == True:
-               text = self.delete_longest_than(text)
-          if self.remove_whitespace == True:
-               text = self.delete_whitespace(text)
-          if self.lemmatizer_ == True:
-               text = self.lemmatizer_(text)
-          if self.stemmer == True:
-               text = self.stemmer_(text)
+          text = string_lower_(text)
+          text = delete_emojis(text)
+          text = delete_hashtags(text)
+          text = delete_emails(text)
+          text = delete_url(text)
+          text = delete_mention(text)     
+          text = delete_new_line_char(text)
+          text = delete_html_tags(text)
+          text = decrease_number_of_consecutive_reapted_letter_(text)
+          text = delete_duplicate_word(text)
+          text = expand_contractions_(text)     
+          text = delete_stop_words(text)
+          text = delete_unicode_and_special_character(text)
+          text = delete_punctuations(text)
+          text = delete_single_letter(text)
+          text = delete_duplicated_letter(text)
+          text = english_spell_correcter_(text)
+          text = delete_non_english(text)
+          text = delete_longest_than(text)
+          text = delete_whitespace(text)
           return text
           
