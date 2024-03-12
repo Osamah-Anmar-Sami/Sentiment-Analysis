@@ -12,9 +12,9 @@ def plot_changes(histoty):
                     Returns:
                         matplotlib.pyplot.Figure: the generated plot object
                     """
-                    accuracy = histoty.history['Accuracy']
+                    accuracy = histoty.history['accuracy']
                     loss = histoty.history['loss']  
-                    val_accuracy = histoty.history['val_Accuracy']
+                    val_accuracy = histoty.history['val_accuracy']
                     val_loss = histoty.history['val_loss']
 
 

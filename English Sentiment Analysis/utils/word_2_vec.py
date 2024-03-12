@@ -39,7 +39,6 @@ def delete_single_letter(text):
     return text
 
 def simple_normalization(text):
-    text = string_lower_(text)
     text = remove_non_english(text)
     text = delete_punctuations(text)
     text = delete_emojis(text)

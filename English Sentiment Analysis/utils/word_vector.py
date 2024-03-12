@@ -33,4 +33,3 @@ def word_vector_(model_path, vocab_size, tokenizer):
          word_vector[idx] = embedding_vector
 
    return embedding_dim, word_vector
-

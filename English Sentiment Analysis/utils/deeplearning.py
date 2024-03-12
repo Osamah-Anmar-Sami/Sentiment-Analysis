@@ -117,8 +117,8 @@ def model_compile(model) :
     """
        
        return model.compile(optimizer=keras.optimizers.legacy.RMSprop(),
-                            loss=keras.losses.BinaryCrossentropy(),
-                            metrics=[keras.metrics.Accuracy(name='Accuracy')])
+                            loss='binary_crossentropy',
+                            metrics=['accuracy'])
     
 def model_fit(model, X_train, y_train, epochs, X_test, y_test, batch_size, name):       
         """
