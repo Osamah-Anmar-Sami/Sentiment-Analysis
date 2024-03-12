@@ -10,10 +10,10 @@ English DataSet: https://www.kaggle.com/datasets/yasserh/imdb-movie-ratings-sent
 https://drive.google.com/drive/folders/14Ue_9xXhuOyavlKIoqban9bL-ebVayrj?usp=drive_link
 
 # Pre Trained Word Embedding
-* Glove : https://nlp.stanford.edu/projects/glove/
-* Fasttext : https://fasttext.cc/docs/en/crawl-vectors.html
-* Google : https://www.kaggle.com/datasets/adarshsng/googlenewsvectors
-* Aravec : https://github.com/bakrianoo/aravec
+* Glove : https://nlp.stanford.edu/projects/glove/  (English Only)
+* Fasttext : https://fasttext.cc/docs/en/crawl-vectors.html (English And Arabic)
+* Google : https://www.kaggle.com/datasets/adarshsng/googlenewsvectors (English Only)
+* Aravec : https://github.com/bakrianoo/aravec (Arabic Only)
 
 # Utils Folder
 * confusion_matrix.py
