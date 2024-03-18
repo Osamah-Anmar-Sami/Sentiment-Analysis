@@ -1,7 +1,6 @@
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
-import arabic_reshaper
-from bidi.algorithm import get_display
+
 
 def wordcloud(data, target, width, hieght, review, max_words):
     """
