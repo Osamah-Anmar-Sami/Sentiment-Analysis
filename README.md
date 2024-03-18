@@ -30,6 +30,10 @@ https://drive.google.com/drive/folders/14Ue_9xXhuOyavlKIoqban9bL-ebVayrj?usp=dri
 * word_vector.py
 * wordcloud.py
 
+# Normalization Folder
+* contraction_expand.py
+* remove_emojis.py
+
 # Library For Text Preprocessing
 * emoji ( Doese Not Remove All Emojis)
 * NLTK
