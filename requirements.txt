@@ -1,0 +1,14 @@
+# python==3.11.8
+pandas==2.2.1
+numpy==1.26.4
+nltk==3.8.1
+tensorflow==2.15.0
+keras==2.15.0
+scikit-learn==1.4.1.post1
+matplotlib==3.8.3
+seaborn==0.13.2
+gensim==4.3.2
+wordcloud==1.9.3
+re==2.2.1
+arabic_reshaper==3.0.0
+python-bidi==0.4.2
