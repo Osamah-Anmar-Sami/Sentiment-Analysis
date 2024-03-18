@@ -1,32 +1,95 @@
-import pyarabic.arabrepr
+
 import re
-import os
-from pyarabic.araby import strip_tashkeel, strip_tatweel, tokenize
-import arabicstopwords.arabicstopwords as stp
-import qalsadi.lemmatizer 
-from ruqiya import ruqiya
-from nltk.stem import  SnowballStemmer
 from ar_corrector.corrector import Corrector
 corr = Corrector()
-import spacy_fastlang
-import spacy
-nlp = spacy.load("xx_ent_wiki_sm")
-nlp.add_pipe("language_detector")
-import string
-Punctuation  = set(string.punctuation).union("{}_!-?.:;""''()،؟,..[]")
+
+
+
+def text_normalization(text):
+          """
+
+          **Normalization techniques:**
+
+          - `remove_emojis`: Remove emojis from the text 
+          - `remove_hashtags`: Remove hashtags from the text 
+          - `remove_emails`: Remove email addresses from the text 
+          - `remove_URLs`: Remove URLs from the text 
+          - `remove_new_line_char`: Remove newline characters from the text 
+          - `remove_mentions`: Remove mentions from the text 
+          - `remove_single_letter`: Remove single-character words from the text 
+          - `remove_repeated_char`: Remove words with repeated characters (e.g., "yesss") 
+          - `remove_duplicate_word`: Remove duplicate words consecutively appearing in the text 
+          - `remove_stop_words`: Remove stop words from the text 
+          - `remove_special_character`: Remove special characters from the text 
+          - `remove_puncuations`: Remove punctuation marks from the text 
+          - `remove_html_tags`: Remove HTML tags from the text 
+          - `remove_numbers`: Remove numbers from the text 
+          - `remove_non_arabic`: Remove non-Arabic characters from the text 
+          - `remove_arabic_diacritics`: Remove diacritics (harakat) from Arabic text 
+          - `normalize_alef_maqsura`: Normalize Alef Maqsura (ى) to Yeh (ي) in Arabic text 
+          - `normalize_alef`: Convert various Alef representations to the basic Alef (ا) in Arabic text 
+          - `normalize_teh_marbuta`: Normalize Teh Marbuta (ة) to Heh (ه) in Arabic text 
+          - `normalize_arabic_tashkeel`: Remove diacritics (tashkeel) from Arabic text 
+          - `normalize_arabic_tatweel`: Remove Tatweel (آ) from Arabic text 
+          - `remove_longest_than`: Remove words longer than a specified length  
+          - `remove_whitespace`: Remove extra whitespace characters from the text
+          -   Applying lemmatization. 
+          """
+
+          
+          text = delete_emojis (text)
+          text = delete_hashtags(text)
+          text = delete_emails( text)
+          text = delete_url(text)
+          text = delete_mention(text)
+          text = delete_html_tags(text)
+          text = delete_new_line_char(text)
+          text = decrease_number_of_consecutive_reapted_letter_(text)
+          text = delete_duplicate_word(text)
+          text = delete_single_letter(text)
+          text = delete_duplicated_letter(text)
+          text = delete_punctuations(text)
+          text = delete_unicode_and_special_character(text)
+          text = delete_stop_words( text)
+          text = delete_number(text)
+          text = delete_arabic_diacritics(text)
+          text = convert_alef_maqsura(text)
+          text = convert_alef(text)
+          text = convert_teh_marbuta(text)
+          text = delete_arabic_tatweel(text)
+          text = convert_gaf(text)
+          text = delete_longest_than(text)
+          text = delete_non_arabic(text)
+          text = delete_whitespace(text)
+          return text
 
 
 def delete_emojis(text):
-          """remove all emojis from text
+        """remove all emojis from text
 
           Args:
               text (string): input text containing emoijis to be removed
 
           Returns:
               string: text without any emojis
-          """ 
-          text = ruqiya.remove_emojis(text)
-          return text
+        """ 
+        emoji_pattern = re.compile(
+                "["
+                "\U0001F600-\U0001F64F"  
+                "\U0001F300-\U0001F5FF" 
+                "\U0001F680-\U0001F6FF"  
+                "\U0001F1E0-\U0001F1FF"  
+                "\U0001F700-\U0001F77F"  
+                "\U0001F780-\U0001F7FF"  
+                "\U0001F800-\U0001F8FF"  
+                "\U0001F900-\U0001F9FF"  
+                "\U0001FA00-\U0001FA6F"  
+                "\U0001FA70-\U0001FAFF"  
+                "\U00002702-\U000027B0"  
+                "\U000024C2-\U0001F251" 
+                "]+", flags=re.UNICODE)
+        text = re.sub(emoji_pattern, ' ', text)
+        return text
      
 def delete_hashtags(text):
           """remove all hashtags from text
@@ -37,8 +100,8 @@ def delete_hashtags(text):
           Returns:
               string: text without any hashtags
           """   
-          text =  ruqiya.remove_hashtags(text)
-          return text
+          text =  re.sub("#[ا-ي٠-٩a-zA-Z0-9]+","", text)
+          return text   
      
 def delete_emails(text):
           """remove all email address from text
@@ -49,8 +112,8 @@ def delete_emails(text):
           Returns:
               string: text without any email address
           """   
-          text = ruqiya.remove_emails(text)
-          return text
+          text = re.sub("[a-zA-Z0-9-_.]+@[a-zA-Z]+.[a-zA-Z]+"," ", text)  
+          return text 
      
 def delete_url(text):
           """remove all URL from text
@@ -61,7 +124,7 @@ def delete_url(text):
           Returns:
               string: text without any URL address
           """ 
-          text = ruqiya.remove_URLs(text)
+          text = re.sub(r'http\S+', ' ', text, flags=re.MULTILINE)
           return text
      
 def delete_mention(text):
@@ -73,7 +136,7 @@ def delete_mention(text):
           Returns:
               string: text without any mention
           """   
-          text = ruqiya.remove_mentions(text)
+          text = re.sub("@[ا-ي٠-٩a-zA-Z0-9]+"," ", text)
           return text
      
 def delete_html_tags(text):
@@ -97,7 +160,8 @@ def delete_new_line_char(text):
           Returns:
               string: text without any new line character 
           """     
-          text = text.replace('\n', ' ')
+          Pattern = r'[\u000D\u000A]'
+          text = re.sub(Pattern, ' ', text)
           return text
      
 def arabic_spell_correcter_( text):
@@ -122,7 +186,8 @@ def decrease_number_of_consecutive_reapted_letter_(text):
 
           Returns:
               string: text without characters reapeted more than 2 times
-          """          ""
+          """
+
           text = re.sub(r'(.)\1+', r'\1\1', text)
           return text
      
@@ -178,9 +243,9 @@ def delete_punctuations(text):
           Returns:
               text: text without punctuation
           """         
-          
-          
-          text = ruqiya.remove_punctuations(text)
+          Punctuation  = "{}_!-?.:؛;""''()،؟,..[]"
+          Punctuations= str.maketrans(' ', ' ', Punctuation)
+          text = text.translate(Punctuations)
           return text
      
 def delete_unicode_and_special_character(text):
@@ -192,9 +257,29 @@ def delete_unicode_and_special_character(text):
           Returns:
               text: text without special characters
           """          
-          Pattern = r'([\u2460-\u24FF\u2070-\u218F\u2022-\u221E\u0E3F\u00A9\u00AE\u2117\u2120\u03B1-\u03C9\u0391-\u039F])'
+          Pattern = r'[\u2460-\u24FF\u2070-\u218F\u2022-\u221E\u0E3F\u00A9\u00AE\u2117\u2120\u03B1-\u03C9\u0391-\u039F\u00BC-\u00BE\u0022-\u0027\u002A\u002B\u002F\u003C-\u003E\u0040\u005C\u005E\u0060\u007C\u007E\u00BC-\u00BE]'
           text = re.sub(Pattern, ' ', text)
           return text
+
+def normalize_arabic_unicode(text):
+    """
+    Normalize Arabic Unicode characters in the given text.
+
+    Parameters:
+        text (str): The input text containing Arabic Unicode characters to normalize.
+
+    Returns:
+        str: The normalized text with Arabic Unicode characters replaced by their corresponding phrases.
+
+    """
+    arabic_unicode = [(r'ﷺ', 'صلى الله عليه و سلم'),
+                      (r'ﷻ', 'جل جلاله'),
+                      (r'﷽', 'بسم الله الرحمن الرحيم')]
+    
+    for unicode, word in arabic_unicode:
+            text = re.sub(unicode, word, text)
+    return text 
+
      
 def delete_stop_words(text):
           """remove all stopword from text
@@ -205,12 +290,10 @@ def delete_stop_words(text):
           Returns:
               string: text without stopwords
           """  
-          StopWords1 = set(stp.stopwords_list())
           stop = open('ArabicStopWord.txt','r', encoding='Utf-8')
-          StopWords2 = set(stop.read().split('\n'))
+          StopWords = set(stop.read().split('\n'))
           stop.close()
-          StopWords = StopWords1.union(StopWords2)
-          text = tokenize(text)
+          text = text.split()
           text =' '.join(word for word in text if word not in StopWords)
           return text
      
@@ -231,13 +314,16 @@ def delete_non_arabic(text):
           """remove non arabic words from the text
 
           Args:
-              text (string): input text contining non english words
+              text (string): input text contining non arabic words
 
           Returns:
-              text: text without non english words
+              text: text without non arabic words
           """ 
-          words = text.split()
-          text = ' '.join(word for word in words if nlp(word)._.language == 'ar' or nlp(word)._.language == 'fa' or word in Punctuation)
+          
+          arabic_letters = "\u0600-\u06FF"
+          punctuation = "{}_!-?.:؛;""''()،؟,..[\]"
+          pattern = f"[{arabic_letters}\d{punctuation}]+"
+          text =  ' '.join(re.findall(pattern, text))
           return text
      
 def delete_arabic_diacritics(text):
@@ -250,7 +336,8 @@ def delete_arabic_diacritics(text):
                Returns:
                     string: the modified text without diacritics
           """
-          text = ruqiya.remove_diacritics(text)
+          pattern = r'[\u0618\u0619\\u061A\u064B\u064C\u064D\u064E\u064F\u0650\u0651\u0652\u0653]+'
+          text = re.sub(pattern, ' ', text)
           return text
 
      
@@ -277,7 +364,7 @@ def convert_alef(text):
                Returns:
                     string: the modified text with all Alef variants replaced by the basic Alef
           """
-          text = re.sub("[ٱأإٲٳٵآ]", "ا", text)
+          text = re.sub("[ٱأإٲٳٵآ]+", "ا", text)
           return text
 
 def convert_teh_marbuta(text):
@@ -293,18 +380,19 @@ def convert_teh_marbuta(text):
           text = re.sub("ة", "ه", text)
           return text
 
-def delete_arabic_tashkeel(text):
-          """delete Arabic Tashkeel
+def convert_gaf(text):
+          """converts Gaf (گ) to Heh (ك) in Arabic text.
 
-               Args:
-               
-                text (string): text with Arabic Tashkeel marks
 
-               Returns:
-                   text after removing Arabic Tashkeel
+          Args:
+               text (string): the Arabic text to convert
+
+          Returns:
+               string: the modified text with Gaf replaced by Kaf
           """
-          text = strip_tashkeel(text)
+          text = re.sub("گ", "ك", text)
           return text
+
 
 def delete_arabic_tatweel(text):
           """delete Arabic Tatweel
@@ -316,7 +404,7 @@ def delete_arabic_tatweel(text):
                Returns:
                   text after removing Arabic Tatweel
           """
-          text = strip_tatweel(text)
+          text = re.sub('_', ' ', text)
           return text
 
 def delete_longest_than(text):
@@ -344,96 +432,4 @@ def delete_whitespace(text):
           """  
           text = re.sub(r"\s+", " ", text)
           return text 
-
-def lemmatizer_(text):
-          """applies lemmatization to lower inflections in words, transforming them to their root forms.
-
-          Args:
-              text (string): input text to be lemmatized
-
-          Returns:
-              string: The lemmatized text, where each word is reduced to its base form
-          """ 
-          lem = qalsadi.lemmatizer.Lemmatizer()
-          text = " ".join([lem.lemmatize(word) for word in text.split()])
-          return text
-
-def stemmer_(text):
-          """applies stemming to lower inflections in words, reducing them to their root forms.
-
-          Args:
-              text (string): input text to be stemmed
-
-          Returns:
-              string: The stemmed text, where each word is reduced to its base form
-          """
-          stemmer = SnowballStemmer('arabic')
-          text = " ".join([stemmer.stem(word) for word in text.split()])
-          return text
-     
-
-
-def text_normalization(text):
-          """Normalizes text based on various configurable options.
-
-          **Available options:**
-
-          - `remove_emojis`: Remove emojis from the text 
-          - `remove_hashtags`: Remove hashtags from the text 
-          - `remove_emails`: Remove email addresses from the text 
-          - `remove_URLs`: Remove URLs from the text 
-          - `remove_new_line_char`: Remove newline characters from the text 
-          - `remove_mentions`: Remove mentions from the text 
-          - `remove_single_letter`: Remove single-character words from the text 
-          - `remove_repeated_char`: Remove words with repeated characters (e.g., "yesss") 
-          - `remove_duplicate_word`: Remove duplicate words consecutively appearing in the text 
-          - `remove_stop_words`: Remove stop words from the text 
-          - `remove_special_character`: Remove special characters from the text 
-          - `remove_puncuations`: Remove punctuation marks from the text 
-          - `remove_html_tags`: Remove HTML tags from the text 
-          - `remove_numbers`: Remove numbers from the text 
-          - `remove_non_arabic`: Remove non-Arabic characters from the text 
-          - `remove_arabic_diacritics`: Remove diacritics (harakat) from Arabic text 
-          - `normalize_alef_maqsura`: Normalize Alef Maqsura (ى) to Yeh (ي) in Arabic text 
-          - `normalize_alef`: Convert various Alef representations to the basic Alef (ا) in Arabic text 
-          - `normalize_teh_marbuta`: Normalize Teh Marbuta (ة) to Heh (ه) in Arabic text 
-          - `normalize_arabic_tashkeel`: Remove diacritics (tashkeel) from Arabic text 
-          - `normalize_arabic_tatweel`: Remove Tatweel (آ) from Arabic text 
-          - `remove_longest_than`: Remove words longer than a specified length  
-          - `remove_whitespace`: Remove extra whitespace characters from the text """
-
-          
-          text = delete_emojis (text)
-          text = delete_hashtags(text)
-          text = delete_emails( text)
-          text = delete_url(text)
-          text = delete_mention(text)
-          text = delete_html_tags(text)
-          text = delete_new_line_char(text)
-          text = decrease_number_of_consecutive_reapted_letter_(text)
-          text = delete_duplicate_word(text)
-          text = delete_single_letter(text)
-          text = delete_duplicated_letter(text)
-          text = delete_punctuations(text)
-          text = delete_unicode_and_special_character(text)
-          text = arabic_spell_correcter_(text)
-          text = delete_stop_words( text)
-          text = delete_number(text)
-          text = delete_non_arabic(text)
-          text = delete_arabic_diacritics(text)
-          text = convert_alef_maqsura(text)
-          text = convert_alef(text)
-          text = convert_teh_marbuta(text)
-          text = delete_arabic_tashkeel(text)
-          text = delete_arabic_tatweel(text)
-          text = delete_longest_than(text)
-          text = delete_whitespace(text)
-          text = lemmatizer_(text)
-
-          return text
-
-
-
-
-
 

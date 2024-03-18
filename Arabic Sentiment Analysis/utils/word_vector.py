@@ -24,7 +24,7 @@ def word_vector_(model_path, vocab_size, tokenizer):
          vector = np.array(values[1:], dtype='float32')
          word_embeddings[word] = vector
 
-   embedding_dim = len(word_embeddings['the'])
+   embedding_dim = len(word_embeddings['كل'])
    
    word_vector = np.zeros((vocab_size + 1, embedding_dim))
    for word, idx in tokenizer.word_index.items():

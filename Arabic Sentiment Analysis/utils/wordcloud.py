@@ -20,10 +20,10 @@ def wordcloud(data, target, width, hieght, review, max_words):
        matplotlib.pyplot.Figure: the generated plot object
     """
     df = data[data['Sentiment'] == target]
-    text = " ".join(txt for txt in df[review])
-    text = arabic_reshaper.reshape(text)
-    text = get_display(text)
-    wordcloud = WordCloud(font_path='arial.ttf',background_color='white', mode='RGB',width=width,height=hieght, max_words = max_words).generate(text)
+    arabic_text = " ".join(txt for txt in df[review])
+    arabic_text = arabic_reshaper.reshape(arabic_text)
+    arabic_text = get_display(arabic_text)
+    wordcloud = WordCloud(font_path='arial.ttf',background_color='white', mode='RGB',width=width,height=hieght, max_words = max_words).generate(arabic_text)
     plt.figure(figsize=(20,10))
     plt.imshow(wordcloud, interpolation='catrom')
     plt.axis("off")
