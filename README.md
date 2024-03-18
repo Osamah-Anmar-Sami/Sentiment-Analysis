@@ -29,3 +29,14 @@ https://drive.google.com/drive/folders/14Ue_9xXhuOyavlKIoqban9bL-ebVayrj?usp=dri
 * word_2_vec.py
 * word_vector.py
 * wordcloud.py
+
+# Library For Text Preprocessing
+* emoji ( Doese Not Remove All Emojis)
+* NLTK
+* Spacy
+* Fasttext
+* ruqia
+* camel_tools
+* pyarabic
+* and many other 
+
