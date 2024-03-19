@@ -35,7 +35,7 @@ https://drive.google.com/drive/folders/14Ue_9xXhuOyavlKIoqban9bL-ebVayrj?usp=dri
 * remove_emojis.py
 
 # Library For Text Preprocessing
-* emoji ( Doese Not Remove All Emojis)
+* emoji 
 * NLTK
 * Spacy
 * Fasttext
