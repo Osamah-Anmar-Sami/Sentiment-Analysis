@@ -45,11 +45,12 @@ def lstm_(vocab_size, embedding_dim, units1, dropout1, units2, dropout2, units3,
     """       
         model = keras.Sequential([
                 Embedding(input_dim=vocab_size, output_dim=embedding_dim,   weights=[embeddings_matrix], trainable=True),
-                LSTM(units=units1, dropout=dropout1, return_sequences=True),
-                LSTM(units=units2, dropout=dropout2, return_sequences=True),
+                LSTM(units=units1, return_sequences=True),
+                Dropout(dropout1),
+                LSTM(units=units2, return_sequences=False),
+                Dropout(dropout2),
                 Dense(units3, activation= 'relu'),
                 Dropout(dropout3),
-                GlobalAveragePooling1D(),
                 Dense(1, activation= 'sigmoid')
                 ])     
         return model  
@@ -74,9 +75,12 @@ def gru_(vocab_size, embedding_dim, units1, dropout1, units2, dropout2, units3, 
     """
             model = keras.Sequential([
                 Embedding(input_dim=vocab_size, output_dim=embedding_dim,  weights=[embeddings_matrix], trainable=True),
-                GRU(units=units1, dropout=dropout1, return_sequences=True),
-                GRU(units=units2, dropout=dropout2, return_sequences=True),
-                GRU(units=units3, dropout=dropout3, return_sequences=False),
+                GRU(units=units1, return_sequences=True),
+                Dropout(dropout1),
+                GRU(units=units2, return_sequences=True),
+                Dropout(dropout2),
+                GRU(units=units3, return_sequences=False),
+                Dropout(dropout3),
                 Dense(1, activation= 'sigmoid')
                 ])     
             return model
@@ -98,8 +102,8 @@ def bidirectional_lstm(vocab_size, embedding_dim, units1, dropout1, embeddings_m
     """
             model = keras.Sequential([
                 Embedding(input_dim=vocab_size, output_dim=embedding_dim,   weights=[embeddings_matrix], trainable=True),
-                Bidirectional(LSTM(units=units1, dropout=dropout1, return_sequences=True)),
-                GlobalMaxPooling1D(),
+                Bidirectional(LSTM(units=units1, return_sequences=False)),
+                Dropout(dropout1),
                 Dense(1, activation= 'sigmoid')
                 ])     
             return model  

@@ -1,6 +1,6 @@
 import re
-from utils.normalization.contraction_expand import contractions_
-from utils.normalization.remove_emojis import remove_emojis_
+from utils.contraction_expand import contractions_
+from utils.remove_emojis import remove_emojis_
 
 
 def text_normalization(text):

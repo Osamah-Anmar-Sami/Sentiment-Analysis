@@ -1,14 +1,19 @@
 from gensim.models import Word2Vec
 import string
-import emoji
 import re
 import os
 from nltk.tokenize import word_tokenize
+from utils.normalization.contraction_expand import contractions_
+from utils.normalization.remove_emojis import remove_emojis_
 
 def remove_non_english(text):
     pattern = re.compile(r'[^a-zA-Z0-9]+')
     text = re.sub(pattern, ' ', text)
     return text
+
+def expand_contractions_(text):
+          text = contractions_(text)
+          return text
 
 def delete_punctuations(text):
     Punctuations= str.maketrans(' ', ' ', string.punctuation)
@@ -21,7 +26,7 @@ def string_lower_(text):
         return text
 
 def delete_emojis(text):
-    text = emoji.replace_emoji(text, replace="")
+    text = remove_emojis_(text)
     return text
 
 def delete_url(text):
@@ -40,6 +45,7 @@ def delete_single_letter(text):
 
 def simple_normalization(text):
     text = remove_non_english(text)
+    text = expand_contractions_(text)
     text = delete_punctuations(text)
     text = delete_emojis(text)
     text = delete_url(text)
