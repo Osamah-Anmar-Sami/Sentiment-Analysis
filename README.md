@@ -29,8 +29,6 @@ https://drive.google.com/drive/folders/14Ue_9xXhuOyavlKIoqban9bL-ebVayrj?usp=dri
 * word_2_vec.py
 * word_vector.py
 * wordcloud.py
-
-# Normalization Folder
 * contraction_expand.py
 * remove_emojis.py
 
