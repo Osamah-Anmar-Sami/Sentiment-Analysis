@@ -3,8 +3,8 @@ import string
 import re
 import os
 from nltk.tokenize import word_tokenize
-from utils.normalization.contraction_expand import contractions_
-from utils.normalization.remove_emojis import remove_emojis_
+from utils.contraction_expand import contractions_
+from utils.remove_emojis import remove_emojis_
 
 def remove_non_english(text):
     pattern = re.compile(r'[^a-zA-Z0-9]+')
