@@ -1,11 +1,10 @@
 import tensorflow as tf
-from keras.layers import *
-from tensorflow import *
-from keras.preprocessing.sequence import pad_sequences
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing import *
+from keras.layers import *
+from keras.preprocessing.sequence import pad_sequences
 
-def deeplearning_preprcosesing_(X_train, X_test, truncating, padding):
+def deeplearning_preprcosesing_(X_train, X_test, truncating, padding,):
     """
     Perform pre-processing steps for deep learning tasks, including tokenization and padding.
 

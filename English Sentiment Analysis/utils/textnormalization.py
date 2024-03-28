@@ -2,8 +2,8 @@ import re
 from utils.contraction_expand import contractions_
 from utils.remove_emojis import remove_emojis_
 import difflib
-english_words = set(open('english_words.txt','r').read().split('\n'))
-consecutive_repeated_letters = set(open('consecutive_repeated_words.txt', 'r').read().split('\n'))
+english_words = set(open('english_data.txt','r').read().split('\n'))
+consecutive_repeated_letters = set(open('english_consecutive_repeated_letters.txt', 'r').read().split('\n'))
 
 class Text_Normalization:
         def __init__(self, 
@@ -102,14 +102,12 @@ class Text_Normalization:
                         text = self.delete_punctuations(text)
                 if self.remove_number == True:
                         text = self.delete_number(text)
-                if self.remove_non_english == True:
-                        text = self.delete_non_english(text)
                 if self.remove_longest_than == True:
                         text = self.delete_longest_than(text)
-                if self.english_spell_correction == True:
-                        text = self.english_spell_correction_(text)
                 if self.decrease_number_of_consecutive_repeated_letter == True:
                         text = self.decrease_number_of_consecutive_repeated_letter_(text)
+                if self.english_spell_correction == True:
+                        text = self.english_spell_correction_(text)
                 if self.remove_duplicate_word == True:
                         text = self.delete_duplicate_word(text)
                 if self.remove_single_letter == True:
@@ -120,7 +118,8 @@ class Text_Normalization:
                         text = self.expand_contractions_(text)
                 if self.remove_stop_words == True:
                         text = self.delete_stop_words(text)
-              
+                if self.remove_non_english == True:
+                        text = self.delete_non_english(text)
                 if self.remove_whitespace == True:
                         text = self.delete_whitespace(text)
 
@@ -258,10 +257,8 @@ class Text_Normalization:
                 Returns:
                     text: text without non english words
                 """ 
-                english_letters = "\u0020-\u007E"
                 punctuation = "{}_!-?.:؛;""''()،؟,..[\]"
-                pattern = f"[{english_letters}\d{punctuation}]+"
-                text =  ' '.join(re.findall(pattern, text))
+                text =  ' '.join(word for word in text.split() if word in english_words or word in punctuation or word.isnumeric() == True)
                 return text
 
         def delete_longest_than(self, text):
@@ -311,8 +308,9 @@ class Text_Normalization:
                 
                 result = []
                 for word in text.split():
+                    word = re.sub(r'(.)\1+', r'\1\1', word)
                     if word not in consecutive_repeated_letters:
-                        word = re.sub(r'(.)\1+', r'\1\1', word) 
+                        word = re.sub(r'(.)\1+', r'\1', word) 
                     result.append(word)
                     text = ' '.join(result)
                 return text

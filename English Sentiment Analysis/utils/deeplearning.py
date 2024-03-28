@@ -1,5 +1,4 @@
 import tensorflow as tf
-import keras
 from keras.layers import *
 from tensorflow import *
 from keras.preprocessing import *
@@ -44,7 +43,7 @@ def lstm_(vocab_size, embedding_dim, units1, dropout1, units2, dropout2, units3,
         keras.Model: the compiled LSTM model
     """       
         model = keras.Sequential([
-                Embedding(input_dim=vocab_size, output_dim=embedding_dim,   weights=[embeddings_matrix], trainable=True),
+                Embedding(input_dim=vocab_size, output_dim=embedding_dim,  weights=[embeddings_matrix], trainable=True),
                 LSTM(units=units1, return_sequences=True),
                 Dropout(dropout1),
                 LSTM(units=units2, return_sequences=False),
