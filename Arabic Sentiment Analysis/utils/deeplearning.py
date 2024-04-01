@@ -118,7 +118,7 @@ def model_compile(model) :
                             loss=tf.keras.losses.CategoricalHinge(),
                             metrics=['accuracy'])
     
-def model_fit(model, X_train, y_train, epochs, X_test, y_test, batch_size, name):       
+def model_fit(model, X_train, y_train, epochs, X_test, y_test, batch_size):       
         """
             fits a Keras model on training data with validation and early stopping.
 
