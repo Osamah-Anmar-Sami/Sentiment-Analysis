@@ -1,46 +1,5 @@
 from gensim.models import Word2Vec
-import string
-from ruqiya import ruqiya
-import re
-import os
 from nltk.tokenize import word_tokenize
-
-def remove_non_english(text):
-    pattern = re.compile(r'[^ٱأإٲٳٵآ-ي0-9٠-٩]+')
-    text = re.sub(pattern, ' ', text)
-    return text
-
-def delete_punctuations(text):
-    text = ruqiya.remove_punctuations(text)
-    return text 
-
-
-def delete_emojis(text):
-    text = ruqiya.remove_emojis(text)
-    return text
-
-def delete_url(text):
-    text = ruqiya.remove_URLs(text)
-    return text
-
-def delete_html_tags(text):     
-          text = re.sub("<.*?>", ' ', text)
-          return text
-
-
-def delete_single_letter(text):
-    pattern = r"\b([ٱأإٲٳٵآ-ي])\b(?!\w)" 
-    text = re.sub(pattern, " ", text)
-    return text
-
-def simple_normalization(text):
-    text = remove_non_english(text)
-    text = delete_punctuations(text)
-    text = delete_emojis(text)
-    text = delete_url(text)
-    text = delete_html_tags(text)
-    text = delete_single_letter(text)
-    return text
 
 def word_2_vec_(data, vector_size, sg, name):
     """
@@ -56,7 +15,6 @@ def word_2_vec_(data, vector_size, sg, name):
        text file: file containing the vector of each word
    """
     data = data.astype(str)
-    data['Text_Normalization'] = data.apply(lambda x: simple_normalization(x))
-    data['Tok'] = data['Text_Normalization'].apply(word_tokenize)
+    data['Tok'] = data.apply(word_tokenize)
     Word2Vec_1 = Word2Vec(data['Tok'], vector_size=vector_size, sg = sg, min_count=1, window = 1, workers = 6, negative=5)
     return Word2Vec_1.wv.save_word2vec_format('{}.txt'.format(name), binary=False)

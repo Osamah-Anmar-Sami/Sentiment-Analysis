@@ -6,7 +6,7 @@ from keras.preprocessing import *
 import matplotlib.pyplot as plt
 from keras.callbacks import ReduceLROnPlateau, EarlyStopping, ModelCheckpoint
 
-def callbacks_ (name):
+def callbacks_ ():
     """create callback functions for model training
 
     Args:
@@ -20,10 +20,8 @@ def callbacks_ (name):
     """    ""
     reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.2, patience=5, min_lr=0.001)
     early_stop = EarlyStopping(monitor='val_loss', patience=5, restore_best_weights=True,)
-    checkpoint = ModelCheckpoint(filepath='{}.h5'.format(name),save_best_only=True,
-                                        monitor='val_loss',verbose=1)
-    
-    return reduce_lr, early_stop, checkpoint
+
+    return reduce_lr, early_stop
 
 def lstm_(vocab_size, embedding_dim, max_length, dropout, units1, embeddings_matrix, units2):
             """
@@ -99,7 +97,6 @@ def bidirectional_lstm(vocab_size, embedding_dim, max_length, dropout, units1, e
             model = keras.Sequential([
                 Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length,   weights=[embeddings_matrix]),
                 Bidirectional(LSTM(units=units1)),
-                Dense(64, activation= 'relu'),
                 Dropout(dropout),
                 Dense(units2, activation= 'relu'),
                 Dense(3, activation= 'softmax')
@@ -139,12 +136,12 @@ def model_fit(model, X_train, y_train, epochs, X_test, y_test, batch_size, name)
         Returns:
             keras.callbacks.History: Training history object containing performance metrics.
         """
-        reduce_lr, early_stop, checkpoint = callbacks_(name)
+        reduce_lr, early_stop = callbacks_()
         history = model.fit(X_train, y_train,
                     epochs=epochs,
                     validation_data=(X_test, y_test),
                     batch_size=batch_size,
-                    callbacks=[early_stop, reduce_lr, checkpoint])
+                    callbacks=[early_stop, reduce_lr])
         return history
     
 
