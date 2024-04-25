@@ -23,7 +23,7 @@ def callbacks_ ():
 
     return reduce_lr, early_stop
 
-def lstm_(vocab_size, embedding_dim, max_length, dropout, units1, embeddings_matrix, units2):
+def lstm_(vocab_size, embedding_dim, max_length, units1, units2, units3, units4, dropout1, dropout2, dropout3, dropout4,  embeddings_matrix):
             """
         creates and returns a sequential LSTM model for sentiment analysis
 
@@ -42,16 +42,17 @@ def lstm_(vocab_size, embedding_dim, max_length, dropout, units1, embeddings_mat
             keras.Model: the compiled LSTM model
         """   
             model = keras.Sequential([
-                Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length,   weights=[embeddings_matrix]),
-                LSTM(units=units1),
-                Dense(64, activation= 'relu'),
-                Dropout(dropout),
-                Dense(units2, activation= 'relu'),
-                Dense(3, activation= 'softmax')
+                Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length,  embeddings_initializer=keras.initializers.Constant(embeddings_matrix), trainable = True),
+                LSTM(units=units1, dropout=dropout1, return_sequences=True, kernel_initializer=tf.keras.initializers.random_normal(seed=1), kernel_regularizer=keras.regularizers.L2(l2=0.001)),
+                LSTM(units=units2, dropout=dropout2, return_sequences=True, kernel_initializer=tf.keras.initializers.random_normal(seed=1), kernel_regularizer=keras.regularizers.L2(l2=0.001)),
+                LSTM(units=units3, dropout=dropout3, return_sequences=False, kernel_initializer=tf.keras.initializers.random_normal(seed=1), kernel_regularizer=keras.regularizers.L2(l2=0.001)),
+                Dense(units4, activation= 'tanh', kernel_initializer=tf.keras.initializers.random_normal(seed=1), kernel_regularizer=keras.regularizers.L2(l2=0.001)),
+                Dropout(dropout4),
+                Dense(1, activation= 'sigmoid', kernel_initializer=tf.keras.initializers.random_normal(seed=1))
                 ])     
             return model  
 
-def gru_(vocab_size, embedding_dim, max_length, dropout, units1, embeddings_matrix, units2):
+def gru_(vocab_size, embedding_dim, max_length, units1, dropout1, units2, dropout2, units3,  embeddings_matrix):
             """
                 creates and returns a sequential GRU model for sentiment analysis
 
@@ -70,17 +71,16 @@ def gru_(vocab_size, embedding_dim, max_length, dropout, units1, embeddings_matr
                     keras.Model: the compiled GRU model
              """
             model = tf.keras.Sequential([
-                Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length,  weights=[embeddings_matrix]),
-                GRU(units=units1),
-                Dense(64, activation= 'relu'),
-                Dropout(dropout),
-                Dense(units2, activation= 'relu'),
-                Dense(3, activation= 'softmax')
+                Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length,  embeddings_initializer=keras.initializers.Constant(embeddings_matrix), trainable = True),
+                GRU(units=units1, dropout=dropout1, return_sequences=True, kernel_initializer=tf.keras.initializers.random_normal(seed=1), kernel_regularizer=keras.regularizers.L2(l2=0.001)),
+                GRU(units=units2, dropout=dropout2, return_sequences=False,kernel_initializer=tf.keras.initializers.random_normal(seed=1), kernel_regularizer=keras.regularizers.L2(l2=0.001)),
+                Dense(units=units3, activation= 'tanh', kernel_initializer=tf.keras.initializers.random_normal(seed=1), kernel_regularizer=keras.regularizers.L2(l2=0.001)),
+                Dense(1, activation= 'sigmoid', kernel_initializer=tf.keras.initializers.random_normal(seed=1))
                 ])     
             return model
 
 
-def bidirectional_lstm(vocab_size, embedding_dim, max_length, dropout, units1, embeddings_matrix, units2):
+def bidirectional_lstm(vocab_size, embedding_dim, max_length, units1, dropout1, units2, dropout2, units3, dropout3,  embeddings_matrix):
             """
                 creates and returns a sequential bidirectional LSTM model for sentiment analysis
 
@@ -95,11 +95,12 @@ def bidirectional_lstm(vocab_size, embedding_dim, max_length, dropout, units1, e
                     keras.Model: the compiled bidirectional LSTM model.
             """
             model = keras.Sequential([
-                Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length,   weights=[embeddings_matrix]),
-                Bidirectional(LSTM(units=units1)),
-                Dropout(dropout),
-                Dense(units2, activation= 'relu'),
-                Dense(3, activation= 'softmax')
+                Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length,  embeddings_initializer=keras.initializers.Constant(embeddings_matrix), trainable = True),
+                Bidirectional(LSTM(units=units1, dropout=dropout1, return_sequences=True, kernel_initializer=tf.keras.initializers.random_normal(seed=1), kernel_regularizer=keras.regularizers.L2(l2=0.001))),
+                Bidirectional(LSTM(units=units2, dropout=dropout2, return_sequences=False, kernel_initializer=tf.keras.initializers.random_normal(seed=1), kernel_regularizer=keras.regularizers.L2(l2=0.001))),
+                Dense(units=units3, activation= 'tanh', kernel_initializer=tf.keras.initializers.random_normal(seed=1), kernel_regularizer=keras.regularizers.L2(l2=0.001)),
+                Dropout(dropout3),
+                Dense(1, activation= 'sigmoid', kernel_initializer=tf.keras.initializers.random_normal(seed=1))
                 ])     
             return model  
 
@@ -115,8 +116,8 @@ def model_compile(model) :
                 keras.Model: the compiled Keras model
     """
         return model.compile(optimizer=tf.keras.optimizers.legacy.Adam(learning_rate=0.0001),
-                            loss=tf.keras.losses.CategoricalHinge(),
-                            metrics=['accuracy'])
+                            loss=tf.keras.losses.BinaryCrossentropy(),
+                            metrics= ['accuracy'])
     
 def model_fit(model, X_train, y_train, epochs, X_test, y_test, batch_size):       
         """

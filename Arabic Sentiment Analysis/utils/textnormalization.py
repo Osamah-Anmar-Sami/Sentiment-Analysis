@@ -22,6 +22,7 @@ class TextNormalization:
                      normalize_gaf,
                      normalize_pe,
                      normalize_che,
+                     normalize_kurdish_waw,
                      decrease_number_of_consecutive_reapted_letter,
                      remove_punctuations,
                      normalize_arabic_unicode,
@@ -38,7 +39,6 @@ class TextNormalization:
                      remove_longest_than,
                      remove_whitespace):
 
-                
                 self.remove_emojis = remove_emojis
                 self.remove_hashtags = remove_hashtags
                 self.remove_emails = remove_emails
@@ -52,6 +52,7 @@ class TextNormalization:
                 self.normalize_gaf = normalize_gaf
                 self.normalize_pe = normalize_pe
                 self.normalize_che = normalize_che
+                self.normalize_kurdish_waw = normalize_kurdish_waw
                 self.decrease_number_of_consecutive_reapted_letter = decrease_number_of_consecutive_reapted_letter
                 self.remove_punctuations = remove_punctuations
                 self.normalize_arabic_unicode = normalize_arabic_unicode
@@ -68,7 +69,7 @@ class TextNormalization:
                 self.remove_longest_than = remove_longest_than
                 self.remove_whitespace = remove_whitespace
 
-
+	
         def text_normalization(self, text):
                 if  self.remove_emojis == True:
                         text = self.delete_emojis(text)
@@ -92,6 +93,8 @@ class TextNormalization:
                         text = self.convert_pe(text)
                 if self.normalize_che == True:
                         text = self.convert_che(text)
+                if self.normalize_kurdish_waw == True:
+                        text = self.convert_kurdish_waw(text)
                 if self.remove_punctuations == True:
                         text = self.delete_punctuations(text)
                 if self.normalize_arabic_unicode == True:
@@ -127,7 +130,6 @@ class TextNormalization:
                 if self.remove_whitespace == True:
                         text = self.delete_whitespace(text)
                 return text
-                                
 
         def delete_emojis(self, text):
                 """remove all emojis from text
@@ -152,7 +154,7 @@ class TextNormalization:
                 Returns:
                     string: text without any hashtags
                 """   
-                text =  re.sub("#[[ٱأإٲٳٵآ-ي٠-٩a-zA-Z0-9]+","", text)
+                text =  re.sub("#[[ٱأإٲٳٵآ-ي٠-٩a-zA-Z0-9]+"," ", text)
                 return text   
 
         def delete_emails(self, text):
@@ -298,6 +300,17 @@ class TextNormalization:
                 text = re.sub("چ", "ج", text)
                 return text
         
+        def convert_kurdish_waw(self, text):
+                """converts Kurdish Waw (ۆ) to Waw (و) in Arabic text.
+                Args:
+                    text (string): the Arabic text to convert
+
+                Returns:
+                    string: the modified text with Che replaced by Kaf
+                """
+                text = re.sub("ۆ", "و", text)
+                return text
+
         def decrease_number_of_consecutive_repeated_letter_(self, text):
                 """decrease number consecutive characters repeated more than 2 times in a each word for given text
 
@@ -327,9 +340,9 @@ class TextNormalization:
                 Returns:
                     text: text without punctuation
                 """         
-                Punctuation  = "{}_!-?.:؛;""''()،؟,..[]"
-                Punctuations= str.maketrans(' ', ' ', Punctuation)
-                text = text.translate(Punctuations)
+                Punctuation  = '''`؛،؟.,-!"\'(),-./:;?[]^_`{}'''
+                for punctuation in Punctuation:
+                    text = text.replace(punctuation, ' ')
                 return text
 
         def normalize_arabic_unicode_(self, text):
@@ -390,7 +403,7 @@ class TextNormalization:
                 Returns:
                     text: text without numbers
                 """
-                text = re.sub(r'\d+', '', text)
+                text = re.sub(r'\d+', ' ', text)
                 return text
 
         def arabic_spell_correction_(self, text):
@@ -504,7 +517,7 @@ class TextNormalization:
                 """ 
                 for word in text.split():
                     if len(word) >=16:
-                            text = text.replace(word, '')
+                            text = text.replace(word, ' ')
                 return text
 
         def delete_whitespace(self, text):
@@ -516,5 +529,6 @@ class TextNormalization:
                 Returns:
                     string: text without extra whitespaces
                 """  
-                text = re.sub(r"\s+", " ", text)
+                text = re.sub(' +', ' ', text)
+                text = text.strip()
                 return text 
