@@ -4,7 +4,7 @@ Sentiment analysis is the process of analyzing digital text to determine the emo
 # DataSet
 Arabic DataSet: https://www.kaggle.com/datasets/abedkhooli/arabic-ulmfit-model
 
-English DataSet: https://www.kaggle.com/datasets/renanmav/imdb-movie-review-dataset
+English DataSet: https://www.kaggle.com/datasets/ilhamfp31/yelp-review-dataset
 
 # Pre Trained Word Embedding
 * Glove : https://nlp.stanford.edu/projects/glove/  (English Only)
