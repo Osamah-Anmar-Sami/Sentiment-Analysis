@@ -13,7 +13,7 @@ def bar_plot(data, x, y):
     """
     
     fig, ax = plt.subplots(figsize=(20, 10))
-    sns.barplot(data=data, x=x, y=y, width=0.6, palette = sns.color_palette("husl", 15), ax=ax)
+    sns.barplot(data=data, x=x, y=y, width=0.6, palette =sns.color_palette("Set2", 15), ax=ax)
     plt.xticks(fontsize=12)
     plt.yticks(fontsize=12)
     plt.rcParams['font.family'] = 'Arial'

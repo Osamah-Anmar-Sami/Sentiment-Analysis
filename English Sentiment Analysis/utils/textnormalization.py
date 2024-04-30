@@ -1,9 +1,10 @@
 import re
 from utils.contraction_expand import contractions_
-from utils.remove_emojis import remove_emojis_
+import pandas as pd
 import difflib
-english_words = set(open('english_data.txt','r').read().split('\n'))
-consecutive_repeated_letters = set(open('english_consecutive_repeated_letters.txt', 'r').read().split('\n'))
+english_data = set(open('english_data.txt','r').read().split('\n'))
+consecutive_repeated_letters = set(open('english_consecutive_repeated_words.txt', 'r').read().split('\n'))
+emojis = pd.read_csv('Emojis.csv')
 
 class Text_Normalization:
         def __init__(self, 
@@ -27,7 +28,7 @@ class Text_Normalization:
                      remove_number,
                      remove_non_english,
                      remove_longest_than,
-                     remove_whitespace) :
+                     remove_extra_whitespace) :
                 
                      self.string_lower = string_lower 
                      self.remove_emojis = remove_emojis
@@ -49,7 +50,7 @@ class Text_Normalization:
                      self.remove_number = remove_number
                      self.remove_non_english = remove_non_english
                      self.remove_longest_than = remove_longest_than
-                     self.remove_whitespace = remove_whitespace
+                     self.remove_extra_whitespace = remove_extra_whitespace
 
 
         """
@@ -76,7 +77,7 @@ class Text_Normalization:
         - remove_number: Whether to remove numerical digits from the text.
         - remove_non_english: Whether to remove non-English characters from the text.
         - remove_longest_than: Whether to remove words longer than a specified length from the text.
-        - remove_whitespace: Whether to remove extra whitespace from the text.
+        - remove_extra_whitespace: Whether to remove extra whitespace from the text.
         """
         
         def text_normalization(self, text):
@@ -96,32 +97,32 @@ class Text_Normalization:
                         text = self.delete_html_tags(text)
                 if self.remove_new_line_char == True:
                         text = self.delete_new_line_char(text)
-                if self.remove_unicode_and_special_character == True:
-                        text = self.delete_unicode_and_special_character(text)
-                if self.remove_punctuations == True:
-                        text = self.delete_punctuations(text)
-                if self.remove_number == True:
-                        text = self.delete_number(text)
-                if self.remove_longest_than == True:
-                        text = self.delete_longest_than(text)
-                if self.decrease_number_of_consecutive_repeated_letter == True:
-                        text = self.decrease_number_of_consecutive_repeated_letter_(text)
-                if self.english_spell_correction == True:
-                        text = self.english_spell_correction_(text)
+                if self.expand_contractions == True:
+                        text = self.expand_contractions_(text)
                 if self.remove_duplicate_word == True:
                         text = self.delete_duplicate_word(text)
                 if self.remove_single_letter == True:
                         text = self.delete_single_letter(text)
                 if self.remove_duplicated_letter == True:
                         text = self.delete_duplicated_letter(text)
-                if self.expand_contractions == True:
-                        text = self.expand_contractions_(text)
+                if self.english_spell_correction == True:
+                        text = self.english_spell_correction_(text)
+                if self.decrease_number_of_consecutive_repeated_letter == True:
+                        text = self.decrease_number_of_consecutive_repeated_letter_(text)
+                if self.remove_unicode_and_special_character == True:
+                        text = self.delete_unicode_and_special_character(text)
+                if self.remove_punctuations == True:
+                        text = self.delete_punctuations(text)
                 if self.remove_stop_words == True:
                         text = self.delete_stop_words(text)
+                if self.remove_number == True:
+                        text = self.delete_number(text)
                 if self.remove_non_english == True:
                         text = self.delete_non_english(text)
-                if self.remove_whitespace == True:
-                        text = self.delete_whitespace(text)
+                if self.remove_longest_than == True:
+                        text = self.delete_longest_than(text)    
+                if self.remove_extra_whitespace == True:
+                        text = self.delete_extra_whitespace(text)
 
                 return text
                 
@@ -147,7 +148,9 @@ class Text_Normalization:
                 Returns:
                     string: text without any emojis
                 """ 
-                text = remove_emojis_(text)
+                for emoji in text:
+                    if emoji in emojis.values:
+                        text = text.replace(emoji, ' ')
                 return text
 
         def delete_hashtags(self, text):
@@ -183,7 +186,8 @@ class Text_Normalization:
                 Returns:
                     string: text without any URL address
                 """        " "
-                text = re.sub(r'http\S+', ' ', text, flags=re.MULTILINE)
+                text = re.sub('http\S+', ' ', text)
+                text = re.sub('www.+', ' ', text)
                 return text
 
         def delete_mention(self, text):
@@ -257,8 +261,12 @@ class Text_Normalization:
                 Returns:
                     text: text without non english words
                 """ 
+                # pattern = re.compile(r'[^a-zA-Z\s]')
+                # text = re.sub(pattern, '', text)
+                
+                
                 punctuation = "{}_!-?.:؛;""''()،؟,..[\]"
-                text =  ' '.join(word for word in text.split() if word in english_words or word in punctuation or word.isnumeric() == True)
+                text =  ' '.join(word for word in text.split() if word in english_data or word in punctuation or word.isnumeric() == True)
                 return text
 
         def delete_longest_than(self, text):
@@ -287,10 +295,10 @@ class Text_Normalization:
             
             corrected_word = []
             for word in text.split():
-                    if word in english_words:
+                    if word in english_data:
                             corrected_word.append(word)
                     else:
-                            match = difflib.get_close_matches(word, english_words, n=1, cutoff=0.7)
+                            match = difflib.get_close_matches(word, english_data, n=1, cutoff=0.7)
                             corrected_word.append(match[0] if match else word)
                             text = ' '.join(corrected_word)
             return text
@@ -393,12 +401,12 @@ class Text_Normalization:
                 Returns:
                     text: text without punctuation
                 """         
-                Punctuation  = "{}_!-?.:؛;""''()،؟,..[]"
-                Punctuations= str.maketrans(' ', ' ', Punctuation)
-                text = text.translate(Punctuations)
+                Punctuation  = '''`؛،؟.,-!"\'(),-./:;?[]^_`{}'''
+                for punctuation in Punctuation:
+                    text = text.replace(punctuation, ' ')
                 return text
 
-        def delete_whitespace(self, text):
+        def delete_extra_whitespace(self, text):
                 """remove extra whitespaces at the beginning and end of the text
 
                 Args:
@@ -407,5 +415,5 @@ class Text_Normalization:
                 Returns:
                     string: text without extra whitespaces
                 """          ""
-                text = re.sub(r"\s+", " ", text)
+                text = text.strip()
                 return text 

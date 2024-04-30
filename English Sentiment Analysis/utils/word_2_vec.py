@@ -16,5 +16,5 @@ def word_2_vec_(data, vector_size, sg, name):
    """
     data = data.astype(str)
     data['Tok'] = data.apply(word_tokenize)
-    Word2Vec_1 = Word2Vec(data['Tok'], vector_size=vector_size, sg = sg, min_count=1, window = 1, workers = 6, negative=5)
+    Word2Vec_1 = Word2Vec(data['Tok'], vector_size=vector_size, sg = sg, min_count=1, window = 5, workers = 4, negative=20)
     return Word2Vec_1.wv.save_word2vec_format('{}.txt'.format(name), binary=False)
