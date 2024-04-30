@@ -6,6 +6,9 @@ Arabic DataSet: https://www.kaggle.com/datasets/abedkhooli/arabic-ulmfit-model
 
 English DataSet: https://www.kaggle.com/datasets/ilhamfp31/yelp-review-dataset
 
+# Data
+https://drive.google.com/drive/folders/10kre56jqoGyuoC0hwhC__HIAisCAxtvC?usp=drive_link
+
 # Pre Trained Word Embedding
 * Glove : https://nlp.stanford.edu/projects/glove/  (English Only)
 * Fasttext : https://fasttext.cc/docs/en/crawl-vectors.html (English And Arabic)
