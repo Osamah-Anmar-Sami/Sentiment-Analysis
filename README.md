@@ -65,7 +65,9 @@ The model used in this project is a machine learning classifier trained on the p
 git clone https://github.com/Osama-Anmar/Sentiment-Analysis.git
 cd Sentiment-Analysis
 pip install -r requirements.txt
+```
+#  Contributing
+Contributions are welcome! Please feel free to submit a pull request or open an issue if you have suggestions or improvements.
 
-# Test
-
-
+# License
+This project is licensed under the MIT License. See the LICENSE file for more details.
