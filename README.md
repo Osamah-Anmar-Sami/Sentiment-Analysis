@@ -58,7 +58,7 @@ The model used in this project is a machine learning classifier trained on the p
 * Decision Tree
 * Random Forest
 * LSTM (Long Short-Term Memory) Neural Network
-* Gated Recurrent Unit
+* GRU (Gated Recurrent Unit)
 
 #  Installation
 ```bash
