@@ -42,3 +42,28 @@ https://drive.google.com/drive/folders/10kre56jqoGyuoC0hwhC__HIAisCAxtvC?usp=dri
 * pyarabic
 * and many other 
 
+# Preprocessing
+Before feeding the data into the model, several preprocessing steps are performed:
+
+Tokenization: Breaking down text into individual words or tokens.
+Lowercasing: Converting all text to lowercase to ensure uniformity.
+Stopword Removal: Removing common words that do not contribute to sentiment.
+
+# Model
+The model used in this project is a machine learning classifier trained on the preprocessed text data. Several models have been experimented with, including:
+
+* Logistic Regression
+* Support Vector Machine (SVM)
+* Naive Bayes
+* Decision Tree
+* Random Forest
+* LSTM (Long Short-Term Memory) Neural Network
+* Gated Recurrent Unit
+
+##  Installation
+```bash
+git clone https://github.com/Osama-Anmar/Sentiment-Analysis.git
+cd Sentiment-Analysis
+pip install -r requirements.txt ```
+
+
