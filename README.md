@@ -4,13 +4,15 @@ This repository contains a Sentiment Analysis project that classifies the sentim
 # DataSet
 Arabic DataSet: https://www.kaggle.com/datasets/abedkhooli/arabic-ulmfit-model
 
-English DataSet: https://www.kaggle.com/datasets/ilhamfp31/yelp-review-dataset
+English DataSet: https://www.kaggle.com/datasets/lakshmi25npathi/imdb-dataset-of-50k-movie-reviews
 
 # Data
 https://drive.google.com/drive/folders/10kre56jqoGyuoC0hwhC__HIAisCAxtvC?usp=drive_link
 
 # Pre Trained Word Embedding
 * Glove : https://nlp.stanford.edu/projects/glove/  (English Only)
+
+# Other Pre Trained Word Embedding
 * Fasttext : https://fasttext.cc/docs/en/crawl-vectors.html (English And Arabic)
 * Google : https://www.kaggle.com/datasets/adarshsng/googlenewsvectors (English Only)
 * Aravec : https://github.com/bakrianoo/aravec (Arabic Only)
@@ -31,6 +33,8 @@ https://drive.google.com/drive/folders/10kre56jqoGyuoC0hwhC__HIAisCAxtvC?usp=dri
 * wordcloud.py
 * contraction_expand.py
 * remove_emojis.py
+* transformer.py
+* model_inference.py
 
 # Library For Text Preprocessing
 * emoji 
@@ -57,8 +61,10 @@ The model used in this project is a machine learning classifier trained on the p
 * Naive Bayes
 * Decision Tree
 * Random Forest
+* SGD
 * LSTM (Long Short-Term Memory) Neural Network
 * GRU (Gated Recurrent Unit)
+* Bidirectional LSTM
 
 #  Installation
 ```bash
@@ -66,6 +72,9 @@ git clone https://github.com/Osama-Anmar/Sentiment-Analysis.git
 cd Sentiment-Analysis
 pip install -r requirements.txt
 ```
+#  Usage
+Just insert your text in **text** of model inference
+
 #  Contributing
 Contributions are welcome! Please feel free to submit a pull request or open an issue if you have suggestions or improvements.
 
