@@ -1,10 +1,10 @@
 import tensorflow as tf
 import keras
-from keras.layers import *
+from keras.layers import Embedding, LSTM, Dense, Dropout, GRU, Bidirectional # type: ignore
 from tensorflow import *
-from keras.preprocessing import *
+from keras.preprocessing import * # type: ignore
 import matplotlib.pyplot as plt
-from keras.callbacks import ReduceLROnPlateau, EarlyStopping
+from keras.callbacks import ReduceLROnPlateau, EarlyStopping # type: ignore
 
 def callbacks_ ():
     """create callback functions for model training
@@ -23,19 +23,14 @@ def callbacks_ ():
 
     return reduce_lr, early_stop
 
-def lstm_(vocab_size, embedding_dim, max_length, units1, units2, units3, units4, dropout1, dropout2, dropout3, dropout4,  embeddings_matrix):
+def lstm_(vocab_size, embedding_dim, max_length, units,  embeddings_matrix):
             """
         creates and returns a sequential LSTM model for sentiment analysis
 
         Args:
             vocab_size (integer): Size of the vocabulary (number of unique words).
             embedding_dim (integer): dimensionality of word embeddings
-            units1 (integer): number of units in the first LSTM layer
-            dropout1 (float): dropout rate for the first LSTM layer (0.0 to disable)
-            units2 (integer): number of units in the second LSTM layer
-            dropout2 (float): dropout rate for the second LSTM layer (0.0 to disable)
-            units3 (integer): number of units in the dense layer before the output layer
-            dropout3 (float): dropout rate for the dense layer (0.0 to disable)
+            units (integer): number of units in the first LSTM layer
             embeddings_matrix (np.ndarray): pre-trained word embedding matrix
 
         Returns:
@@ -43,28 +38,19 @@ def lstm_(vocab_size, embedding_dim, max_length, units1, units2, units3, units4,
         """   
             model = tf.keras.Sequential([
                 Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length,  weights = [embeddings_matrix], trainable = True),
-                LSTM(units=units1, dropout=dropout1, return_sequences=True, kernel_initializer=tf.keras.initializers.GlorotUniform(seed= 1),  kernel_regularizer=keras.regularizers.L2(l2=0.001)),
-                LSTM(units=units2, dropout=dropout2, return_sequences=True,kernel_initializer=tf.keras.initializers.GlorotUniform(seed=100),  kernel_regularizer=keras.regularizers.L2(l2=0.001)),
-                LSTM(units=units3, dropout=dropout3, return_sequences=False,kernel_initializer=tf.keras.initializers.GlorotUniform(seed=100),  kernel_regularizer=keras.regularizers.L2(l2=0.001)),
-                Dense(units4, activation= 'tanh',kernel_initializer=tf.keras.initializers.GlorotUniform(seed=100), kernel_regularizer=keras.regularizers.L2(l2=0.001)),
-                Dropout(dropout4),
-                Dense(1, activation= 'sigmoid',kernel_initializer=tf.keras.initializers.GlorotUniform(seed=100), kernel_regularizer=keras.regularizers.L2(l2=0.001))
+                LSTM(units=units),
+                Dense(1, activation= 'sigmoid')
                 ])     
             return model  
 
-def gru_(vocab_size, embedding_dim, max_length, units1, dropout1, units2, dropout2, units3,  embeddings_matrix):
+def gru_(vocab_size, embedding_dim, max_length, units, embeddings_matrix):
             """
                 creates and returns a sequential GRU model for sentiment analysis
 
                 Args:
                     vocab_size (integer): size of the vocabulary (number of unique words)
                     embedding_dim (integer): dimensionality of word embeddings
-                    units1 (integer): number of units in the first GRU layer
-                    dropout1 (float): dropout rate for the first GRU layer (0.0 to disable)
-                    units2 (integer): number of units in the second GRU layer
-                    dropout2 (float): dropout rate for the second GRU layer (0.0 to disable)
-                    units3 (integer): number of units in the dense layer before the output layer
-                    dropout3 (float): dropout rate for the dense layer (0.0 to disable)
+                    units(integer): number of units in the first GRU layer
                     embeddings_matrix (np.ndarray): pre-trained word embedding matrix
 
                 Returns:
@@ -72,23 +58,20 @@ def gru_(vocab_size, embedding_dim, max_length, units1, dropout1, units2, dropou
              """
             model = tf.keras.Sequential([
                 Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length,  weights = [embeddings_matrix], trainable = True),
-                GRU(units=units1, dropout=dropout1, return_sequences=True,kernel_initializer=tf.keras.initializers.GlorotUniform(seed=100),  kernel_regularizer=keras.regularizers.L2(l2=0.001)),
-                GRU(units=units2, dropout=dropout2, return_sequences=False,kernel_initializer=tf.keras.initializers.GlorotUniform(seed=100),  kernel_regularizer=keras.regularizers.L2(l2=0.001)),
-                Dense(units=units3, activation= 'tanh',kernel_initializer=tf.keras.initializers.GlorotUniform(seed=100), kernel_regularizer=keras.regularizers.L2(l2=0.001)),
-                Dense(1, activation= 'sigmoid', kernel_initializer=tf.keras.initializers.GlorotUniform(seed=100), kernel_regularizer=keras.regularizers.L2(l2=0.001))
+                GRU(units=units),
+                Dense(1, activation= 'sigmoid')
                 ])     
             return model
 
 
-def bidirectional_lstm(vocab_size, embedding_dim, max_length, units1, dropout1, units2, dropout2, units3, dropout3,  embeddings_matrix):
+def bidirectional_lstm(vocab_size, embedding_dim, max_length, units,  embeddings_matrix):
             """
                 creates and returns a sequential bidirectional LSTM model for sentiment analysis
 
                 Args:
                     vocab_size (integer): size of the vocabulary (number of unique words)
                     embedding_dim (integer): dimensionality of word embeddings
-                    units1 (integer): number of units in the bidirectional LSTM layer
-                    dropout1 (float): dropout rate for the bidirectional LSTM layer (0.0 to disable)
+                    units (integer): number of units in the bidirectional LSTM layer
                     embeddings_matrix (np.ndarray): pre-trained word embedding matrix
 
                 Returns:
@@ -96,10 +79,7 @@ def bidirectional_lstm(vocab_size, embedding_dim, max_length, units1, dropout1, 
             """
             model = keras.Sequential([
                 Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length,  weights = [embeddings_matrix], trainable = True),
-                Bidirectional(LSTM(units=units1, dropout=dropout1, return_sequences=True,kernel_initializer=tf.keras.initializers.GlorotUniform(seed=100),  kernel_regularizer=keras.regularizers.L2(l2=0.001))),
-                Bidirectional(LSTM(units=units2, dropout=dropout2, return_sequences=False,kernel_initializer=tf.keras.initializers.GlorotUniform(seed=100),  kernel_regularizer=keras.regularizers.L2(l2=0.001))),
-                Dense(units=units3, activation= 'tanh',kernel_initializer=tf.keras.initializers.GlorotUniform(seed=100), kernel_regularizer=keras.regularizers.L2(l2=0.001)),
-                Dropout(dropout3),
+                Bidirectional(LSTM(units=units)),
                 Dense(1, activation= 'sigmoid', kernel_initializer=tf.keras.initializers.GlorotUniform(seed=100), kernel_regularizer=keras.regularizers.L2(l2=0.001))
                 ])     
             return model  
@@ -115,7 +95,7 @@ def model_compile(model) :
             Returns:
                 keras.Model: the compiled Keras model
     """
-        return model.compile(optimizer=tf.keras.optimizers.legacy.Adam(learning_rate=0.0001),
+        return model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.0001),
                             loss=tf.keras.losses.BinaryCrossentropy(),
                             metrics= ['accuracy'])
     
