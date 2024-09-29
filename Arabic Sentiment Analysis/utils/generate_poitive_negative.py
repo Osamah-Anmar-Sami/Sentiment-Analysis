@@ -1,34 +1,29 @@
-def false_true_positive(Confusin_Matrix):
+def generate_poitive_negative(y_test, y_pred):
     """
-    Calculates the number of False Positives and True Positives from a confusion matrix.
+    Calculate the counts of true positives, false positives, true negatives, and false negatives.
 
-    Args:
-        confusion_matrix (np.ndarray): A 2D array representing a confusion matrix, where rows represent actual classes and columns represent predicted classes.
+    Parameters:
+    y_test (iterable): The true labels (ground truth) for the test set. It should contain binary values (0 or 1).
+    y_pred (iterable): The predicted labels from the model for the test set. It should also contain binary values (0 or 1).
 
     Returns:
-        tuple: A tuple containing two elements:
-            - False positives (int): the total number of False Positives.
-            - True positives (int): the total number of True Positives.
+    tuple: A tuple containing four integers:
+        - False_Positive (int): The count of false positive predictions.
+        - True_Positive (int): The count of true positive predictions.
+        - False_Negative (int): The count of false negative predictions.
+        - True_Negative (int): The count of true negative predictions.
     """
-    False_Postive = Confusin_Matrix[0,1]
-    True_Positive = Confusin_Matrix[0, 0]
+    True_Positive, False_Positive =  0, 0
+    True_Negative, False_Negative = 0, 0
 
-    return False_Postive, True_Positive
+    for i, j in zip(y_test, y_pred):
+        if (i == 1) and (j == 1):
+            True_Positive += 1
+        if (i == 1) and (j != 1):
+            False_Positive += 1
+        if (i == 0) and (j == 0):
+            True_Negative += 1
+        if (i == 0) and (j != 0):
+            False_Negative += 1
 
-
-def false_true_negative(Confusin_Matrix):
-        """
-        calculates the number of False Negatives and True Negatives from a confusion matrix.
-
-        Args:
-                confusion_matrix (np.ndarray): A 2D array representing a confusion matrix, where rows represent actual classes and columns represent predicted classes.
-
-        Returns:
-                tuple: A tuple containing two elements:
-                - False negatives (int): the total number of False Negatives
-                - True negatives (int): the total number of True Negatives
-    """
-        False_Negative = Confusin_Matrix[1,0]
-        True_Negative = Confusin_Matrix[1, 1]
-        
-        return False_Negative, True_Negative
+    return False_Positive, True_Positive, False_Negative, True_Negative

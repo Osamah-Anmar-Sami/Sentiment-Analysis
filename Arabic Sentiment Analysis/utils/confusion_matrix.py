@@ -1,36 +1,40 @@
-from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 import matplotlib.pyplot as plt
-import numpy as np
+import seaborn as sns
+import pandas as pd
 
-def confusion_matrix_(y_test, y_pred):
-        """ Compute the confusion matrix for a classification model
-
-        Args:
-            y_test (array-like): True labels of the test set
-            y_pred (array-like): Predicted labels of the test set
-
-         Returns:
-                ndarray: The confusion matrix, a 2D array of shape (n_classes, n_classes),
-                 where n_classes is the number of unique classes in y_test and y_pred
-        """     
-        confusionmatrix = confusion_matrix(y_pred, y_test)
-        return confusionmatrix
-
-
-def confusion_matrix_display(confusionmatrix, name):
-        """
-        Display a visual representation of the confusion matrix.
-
-        Args:
-          confusionmatrix (array-like): The confusion matrix to be visualized.
-          name (string): The name or label associated with the confusion matrix
-
-        Returns:
-           None: Displays the confusion matrix plot using Matplotlib
+def confusion_matrix_(true_positive, false_positive, true_negative, false_negative):
     """
-        disp = ConfusionMatrixDisplay(confusion_matrix=confusionmatrix, display_labels=['Positive', 'Negative'])
-        disp.plot(cmap='YlGnBu_r', colorbar=False, xticks_rotation='vertical', values_format='d')
-        plt.title('{} Confusion Matrix'.format(name))
-        plt.rcParams['font.size'] = '10'
-        plt.grid(None)
-        return plt.show()
+    Create a confusion matrix DataFrame.
+
+    Parameters:
+    true_positive (int): The number of true positive predictions.
+    false_positive (int): The number of false positive predictions.
+    true_negative (int): The number of true negative predictions.
+    false_negative (int): The number of false negative predictions.
+
+    Returns:
+    pd.DataFrame: A DataFrame representing the confusion matrix with the counts of true positives, false positives,
+                  true negatives, and false negatives.
+    """
+    Confusion_matrix = pd.DataFrame(data=[[true_positive, false_positive], [false_negative, true_negative]], 
+                                     columns=['Positive', 'Negative'], 
+                                     index=['Positive', 'Negative'])
+    return Confusion_matrix
+
+
+def confusion_matrix_display(confusion_matrix, name):
+    """
+    Display the confusion matrix using a heatmap.
+
+    Parameters:
+    confusion_matrix (pd.DataFrame): The confusion matrix DataFrame to be displayed.
+    name (str): The name of the model or task for labeling the plot title.
+
+    Returns:
+    None: This function does not return a value; it displays the confusion matrix as a heatmap.
+    """
+    sns.heatmap(confusion_matrix, annot=True, cbar=False, cmap='Greens', fmt='g');
+    plt.xlabel("Prediction Label")
+    plt.ylabel("Actual Label")
+    plt.suptitle('Confusion Matrix Of {}'.format(name));
+    plt.show()
