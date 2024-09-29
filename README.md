@@ -2,7 +2,7 @@
 This repository contains a Sentiment Analysis project that classifies the sentiment of text data as positive, negative, or neutral. The goal of this project is to build a model that can accurately determine the sentiment expressed in a given piece of text, which can be applied to various applications such as social media monitoring, customer feedback analysis, and more.
 
 # DataSet
-Arabic DataSet: https://www.kaggle.com/datasets/abedkhooli/arabic-ulmfit-model
+Arabic DataSet: https://github.com/elnagara/HARD-Arabic-Dataset/tree/master
 
 English DataSet: https://www.kaggle.com/datasets/lakshmi25npathi/imdb-dataset-of-50k-movie-reviews
 
@@ -10,12 +10,13 @@ English DataSet: https://www.kaggle.com/datasets/lakshmi25npathi/imdb-dataset-of
 https://drive.google.com/drive/folders/10kre56jqoGyuoC0hwhC__HIAisCAxtvC?usp=drive_link
 
 # Pre Trained Word Embedding
-* Glove : https://nlp.stanford.edu/projects/glove/  (English Only)
+* Glove : https://nlp.stanford.edu/projects/glove/
+* Aravec : https://github.com/bakrianoo/aravec
 
 # Other Pre Trained Word Embedding
 * Fasttext : https://fasttext.cc/docs/en/crawl-vectors.html (English And Arabic)
 * Google : https://www.kaggle.com/datasets/adarshsng/googlenewsvectors (English Only)
-* Aravec : https://github.com/bakrianoo/aravec (Arabic Only)
+
 
 # Utils Folder
 * confusion_matrix.py
@@ -65,6 +66,7 @@ The model used in this project is a machine learning classifier trained on the p
 * LSTM (Long Short-Term Memory) Neural Network
 * GRU (Gated Recurrent Unit)
 * Bidirectional LSTM
+* Transformers
 
 #  Installation
 ```bash
