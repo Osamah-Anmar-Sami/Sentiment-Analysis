@@ -11,6 +11,7 @@ def text_normalization(text):
                         text = delete_mention(text)
                         text = delete_html_tags(text)
                         text = delete_new_line_char(text)
+                        text = delete_english_words(text)
                         text = convert_gaf(text)
                         text = convert_pe(text)
                         text = convert_che(text)
@@ -109,6 +110,18 @@ def delete_new_line_char(text):
         """     
         Pattern = r'[\u000D\u000A]'
         text = re.sub(Pattern, ' ', text)
+        return text
+
+def delete_english_words(text):
+        """delete english words in a given text
+
+                Args:
+                    text (string): input text containing english words.
+
+                Returns:
+                    string: text without any english words
+        """    
+        text = re.sub('[A-Za-z]', "  ", text)
         return text
 
 def delete_duplicate_word(text):
@@ -350,6 +363,5 @@ def delete_whitespace(text):
                 Returns:
                     string: text without extra whitespaces
         """  
-        text = re.sub(' +', ' ', text)
         text = text.strip()
         return text 
