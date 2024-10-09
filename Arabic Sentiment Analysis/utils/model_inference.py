@@ -1,5 +1,5 @@
 import tensorflow as tf
-
+import numpy as np
 
 def machine_learning_inference(model, text, vectorizer):
     """
@@ -16,7 +16,7 @@ def machine_learning_inference(model, text, vectorizer):
     text_vec = vectorizer.transform(text)
     results = model.predict(text_vec)
     for i, review in enumerate(text):
-        sentiment = "Positive" if results[i] == 1 else "Negative"
+        sentiment = "Positive" if results[i] == 1 else "Negative" 
         print(f"Review: {review}\nSentiment: {sentiment}\n")
 
 

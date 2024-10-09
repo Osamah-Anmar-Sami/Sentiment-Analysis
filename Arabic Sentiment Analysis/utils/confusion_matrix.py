@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
 
-def confusion_matrix_(true_positive, false_positive, true_negative, false_negative):
+def confusion_matrix_(y_test, y_pred):
     """
     Create a confusion matrix DataFrame.
 
@@ -16,9 +16,25 @@ def confusion_matrix_(true_positive, false_positive, true_negative, false_negati
     pd.DataFrame: A DataFrame representing the confusion matrix with the counts of true positives, false positives,
                   true negatives, and false negatives.
     """
-    Confusion_matrix = pd.DataFrame(data=[[true_positive, false_positive], [false_negative, true_negative]], 
+    positive = 0
+    negative = 0
+    positive_negative = 0
+    negative_positive = 0
+
+    for i, j in zip(y_test, y_pred):
+        if i == 0 and j == 0:
+            negative+=1
+        elif i == 0 and j == 1:
+            negative_positive+=1
+        elif i == 1 and j == 1:
+            positive +=1
+        elif i == 1 and j == 0:
+            positive_negative+=1
+
+    Confusion_matrix = pd.DataFrame(data=[[positive, positive_negative], [negative_positive, negative]], 
                                      columns=['Positive', 'Negative'], 
-                                     index=['Positive', 'Negative'])
+                                     index=['Positive' , 'Negative'])
+    
     return Confusion_matrix
 
 
