@@ -10,12 +10,13 @@ English DataSet: https://www.kaggle.com/datasets/lakshmi25npathi/imdb-dataset-of
 https://drive.google.com/drive/folders/10kre56jqoGyuoC0hwhC__HIAisCAxtvC?usp=drive_link
 
 # Pre Trained Word Embedding
-* Glove : https://nlp.stanford.edu/projects/glove/
-* Aravec : https://github.com/bakrianoo/aravec
+* Glove : https://nlp.stanford.edu/projects/glove/  
+* Arabic : https://drive.google.com/drive/folders/1thqNx2rxBma5MedDK1LFNtrYpZ4Mi3OW?usp=drive_link
 
 # Other Pre Trained Word Embedding
 * Fasttext : https://fasttext.cc/docs/en/crawl-vectors.html (English And Arabic)
 * Google : https://www.kaggle.com/datasets/adarshsng/googlenewsvectors (English Only)
+* * Aravec : https://github.com/bakrianoo/aravec  (Arabic Only)
 
 
 # Utils Folder
