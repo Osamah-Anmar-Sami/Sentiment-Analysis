@@ -21,7 +21,7 @@ def text_normalization(text):
                         text = delete_sindhi_letter(text)
                         text = delete_hebrew_letter(text)
                         text = delete_latin_letter(text)
-                        # text = delete_unwanted_char(text)
+                        text = delete_unwanted_char(text)
                         text = delete_arabic_diacritics(text)
                         text = delete_arabic_tatweel(text)
                         text = convert_gaf(text)
