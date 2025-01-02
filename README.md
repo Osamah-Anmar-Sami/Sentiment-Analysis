@@ -7,19 +7,18 @@ Arabic DataSet: https://github.com/elnagara/HARD-Arabic-Dataset/tree/master
 English DataSet: https://www.kaggle.com/datasets/lakshmi25npathi/imdb-dataset-of-50k-movie-reviews
 
 # Pre Trained Word Embedding
-* 
+* Fasttext : https://fasttext.cc/docs/en/crawl-vectors.html
 * Glove : https://nlp.stanford.edu/projects/glove/
 
 
 # Other Pre Trained Word Embedding
-* Fasttext : https://fasttext.cc/docs/en/crawl-vectors.html (Arabic And English)
 * Google : https://www.kaggle.com/datasets/adarshsng/googlenewsvectors (English Only)
 * Aravec : https://github.com/bakrianoo/aravec  (Arabic Only)
 
 
 # Utils Folder
 * confusion_matrix.py
-* deeplearning_preprcosesing.py
+* text_preprocessing.py
 * deeplearning.py
 * generate_poitive_negative.py
 * machinelearning.py
@@ -28,7 +27,6 @@ English DataSet: https://www.kaggle.com/datasets/lakshmi25npathi/imdb-dataset-of
 * plot_model_changes.py
 * sentimentinformation.py
 * textnormalization.py
-* word_2_vec.py
 * word_vector.py
 * wordcloud.py
 * contraction_expand.py
