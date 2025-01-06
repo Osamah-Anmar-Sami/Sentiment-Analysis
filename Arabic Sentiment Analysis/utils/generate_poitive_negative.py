@@ -1,13 +1,17 @@
 def generate_poitive_negative(confusion_matrix):
     """
-    Extracts the counts of true positives, false positives, true negatives, and false negatives from a confusion matrix.
+    Calculate the counts of true positives, false positives, true negatives, and false negatives.
 
-    Args:
-        confusion_matrix (pandas.DataFrame): A confusion matrix with actual labels as rows and predicted labels as columns.
+    Parameters:
+    y_test (iterable): The true labels (ground truth) for the test set. It should contain binary values (0 or 1).
+    y_pred (iterable): The predicted labels from the model for the test set. It should also contain binary values (0 or 1).
 
     Returns:
-        tuple: A tuple containing the counts of false positives, true positives, false negatives, and true negatives in the following order:
-            (False_Positive, True_Positive, False_Negative, True_Negative)
+    tuple: A tuple containing four integers:
+        - False_Positive (int): The count of false positive predictions.
+        - True_Positive (int): The count of true positive predictions.
+        - False_Negative (int): The count of false negative predictions.
+        - True_Negative (int): The count of true negative predictions.
     """
     True_Positive = confusion_matrix.loc['Positive']['Positive']
     False_Positive = confusion_matrix.loc['Positive']['Negative']

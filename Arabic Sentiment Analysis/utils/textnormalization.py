@@ -10,12 +10,8 @@ class Text_Normalization:
                     remove_html_tags,
                     remove_new_line_char,
                     remove_english_letter,
-                    remove_hindi_letter,
-                    remove_urdu_letter,
-                    remove_sindhi_letter,
-                    remove_hebrew_letter,
-                    remove_latin_letter,
-                    remove_unwanted_char,
+                    remove_stop_words,
+                    remove_al,
                     remove_arabic_diacritics,
                     remove_arabic_tatweel,
                     convert_gaf,
@@ -25,61 +21,74 @@ class Text_Normalization:
                     convert_alef,
                     convert_alef_maqsura,
                     convert_teh_marbuta,
+                    convert_kurdish_rah,
                     convert_ayin,
                     convert_la,
+                    convert_kurdish_tah,
                     convert_kurdish_waw,
+                    convert_kurdish_kha,
+                    convert_kurdish_ga,
+                    remove_greek_letter,
+                    remove_mathematical_operators,
+                    remove_cyrillic_letter,
+                    remove_latin_letter,
+                    remove_currency,
                     remove_punctuations,
-                    normalize_arabic_unicode,
-                    remove_unicode_and_special_character,
-                    remove_stop_words,
                     remove_number,
                     remove_longest_than,
                     remove_duplicate_word,
                     remove_single_letter,
                     remove_duplicated_letter,
+                    remove_unwanted_char,
+                    normalize_arabic_unicode,
+                    remove_unicode_and_special_character,
                     remove_whitespace):
                     
-                    self.remove_emojis = remove_emojis
-                    self.remove_hashtags = remove_hashtags
-                    self.remove_url = remove_url
-                    self.remove_mention = remove_mention
-                    self.remove_html_tags = remove_html_tags
-                    self.remove_new_line_char = remove_new_line_char
-                    self.remove_english_letter = remove_english_letter
-                    self.remove_hindi_letter = remove_hindi_letter
-                    self.remove_urdu_letter = remove_urdu_letter
-                    self.remove_sindhi_letter = remove_sindhi_letter
-                    self.remove_hebrew_letter = remove_hebrew_letter
-                    self.remove_latin_letter = remove_latin_letter
-                    self.remove_unwanted_char = remove_unwanted_char
-                    self.remove_arabic_diacritics = remove_arabic_diacritics
-                    self.remove_arabic_tatweel = remove_arabic_tatweel
-                    self.convert_gaf = convert_gaf
-                    self.convert_pe = convert_pe
-                    self.convert_che = convert_che
-                    self.convert_ve = convert_ve
-                    self.convert_alef = convert_alef
-                    self.convert_alef_maqsura = convert_alef_maqsura
-                    self.convert_teh_marbuta = convert_teh_marbuta
-                    self.convert_ayin = convert_ayin
-                    self.convert_la = convert_la
-                    self.convert_kurdish_waw = convert_kurdish_waw
-                    self.remove_punctuations = remove_punctuations
-                    self.normalize_arabic_unicode = normalize_arabic_unicode
-                    self.remove_unicode_and_special_character = remove_unicode_and_special_character
-                    self.remove_stop_words = remove_stop_words
-                    self.remove_number = remove_number
-                    self.remove_longest_than = remove_longest_than
-                    self.remove_duplicate_word = remove_duplicate_word
-                    self.remove_single_letter = remove_single_letter
-                    self.remove_duplicated_letter = remove_duplicated_letter
-                    self.remove_whitespace = remove_whitespace
+                self.remove_emojis = remove_emojis
+                self.remove_hashtags = remove_hashtags
+                self.remove_url = remove_url
+                self.remove_mention = remove_mention
+                self.remove_html_tags = remove_html_tags
+                self.remove_new_line_char = remove_new_line_char
+                self.remove_english_letter = remove_english_letter
+                self.remove_stop_words = remove_stop_words
+                self.remove_al = remove_al
+                self.remove_arabic_diacritics = remove_arabic_diacritics
+                self.remove_arabic_tatweel = remove_arabic_tatweel
+                self.convert_gaf = convert_gaf
+                self.convert_pe = convert_pe
+                self.convert_che = convert_che
+                self.convert_ve = convert_ve
+                self.convert_alef = convert_alef
+                self.convert_alef_maqsura = convert_alef_maqsura
+                self.convert_teh_marbuta = convert_teh_marbuta
+                self.convert_kurdish_rah = convert_kurdish_rah
+                self.convert_ayin = convert_ayin
+                self.convert_la = convert_la
+                self.convert_kurdish_tah = convert_kurdish_tah
+                self.convert_kurdish_waw = convert_kurdish_waw
+                self.convert_kurdish_kha = convert_kurdish_kha
+                self.convert_kurdish_ga = convert_kurdish_ga
+                self.remove_greek_letter = remove_greek_letter
+                self.remove_mathematical_operators = remove_mathematical_operators
+                self.remove_cyrillic_letter = remove_cyrillic_letter
+                self.remove_latin_letter = remove_latin_letter
+                self.remove_currency = remove_currency
+                self.remove_punctuations = remove_punctuations
+                self.remove_number = remove_number
+                self.remove_longest_than = remove_longest_than
+                self.remove_duplicate_word = remove_duplicate_word
+                self.remove_single_letter = remove_single_letter
+                self.remove_duplicated_letter = remove_duplicated_letter
+                self.remove_unwanted_char = remove_unwanted_char
+                self.normalize_arabic_unicode = normalize_arabic_unicode
+                self.remove_unicode_and_special_character = remove_unicode_and_special_character
+                self.remove_whitespace = remove_whitespace
 
 
         def text_normalization(self, text):
-                text = text.replace("\U00011e27", " ")
                 if self.remove_emojis == True:
-                        text = self.remove_emojis_(text)
+                    text = self.remove_emojis_(text)
                 if self.remove_hashtags == True:
                         text = self.remove_hashtags_(text)
                 if self.remove_url == True:
@@ -92,18 +101,10 @@ class Text_Normalization:
                         text = self.remove_new_line_char_(text)
                 if self.remove_english_letter == True:
                         text = self.remove_english_letter_(text)
-                if self.remove_hindi_letter == True:
-                        text = self.remove_hindi_letter_(text)
-                if self.remove_urdu_letter == True:
-                        text = self.remove_urdu_letter_(text)
-                if self.remove_sindhi_letter == True:
-                        text = self.remove_sindhi_letter_(text)
-                if self.remove_hebrew_letter == True:
-                        text = self.remove_hebrew_letter_(text)
-                if self.remove_latin_letter == True:
-                        text = self.remove_latin_letter_(text)
-                if self.remove_unwanted_char == True:
-                        text = self.remove_unwanted_char_(text)
+                if self.remove_stop_words == True:
+                        text = self.remove_stop_words_(text)
+                if self.remove_al == True:
+                        text = self.remove_al_(text)
                 if self.remove_arabic_diacritics == True:
                         text = self.remove_arabic_diacritics_(text)
                 if self.remove_arabic_tatweel == True:
@@ -122,20 +123,32 @@ class Text_Normalization:
                         text = self.convert_alef_maqsura_(text)
                 if self.convert_teh_marbuta == True:
                         text = self.convert_teh_marbuta_(text)
+                if self.convert_kurdish_rah == True:
+                        text = self.convert_kurdish_rah_(text)
                 if self.convert_ayin == True:
                         text = self.convert_ayin_(text)
                 if self.convert_la == True:
                         text = self.convert_la_(text)
+                if self.convert_kurdish_tah == True:
+                        text = self.convert_kurdish_tah_(text)
                 if self.convert_kurdish_waw == True:
                         text = self.convert_kurdish_waw_(text)
+                if self.convert_kurdish_kha == True:
+                        text = self.convert_kurdish_kha_(text)
+                if self.convert_kurdish_ga == True:
+                        text = self.convert_kurdish_ga_(text)
                 if self.remove_punctuations == True:
                         text = self.remove_punctuations_(text)
-                if self.normalize_arabic_unicode_ == True:
-                        text = self.normalize_arabic_unicode_(text)
-                if self.remove_unicode_and_special_character == True:
-                        text = self.remove_unicode_and_special_character_(text)
-                if self.remove_stop_words == True:
-                        text = self.remove_stop_words_(text)
+                if self.remove_greek_letter == True:
+                        text = self.remove_greek_letter_(text)
+                if self.remove_mathematical_operators == True:
+                        text = self.remove_mathematical_operators_(text)
+                if self.remove_cyrillic_letter == True:
+                        text = self.remove_cyrillic_letter_(text)
+                if self.remove_latin_letter == True:
+                        text = self.remove_latin_letter_(text)
+                if self.remove_currency == True:
+                        text = self.remove_currency_(text)
                 if self.remove_number == True:
                         text = self.remove_number_(text)
                 if self.remove_longest_than == True:
@@ -146,28 +159,37 @@ class Text_Normalization:
                         text = self.remove_single_letter_(text)
                 if self.remove_duplicated_letter == True:
                         text = self.remove_duplicated_letter_(text)
+                if self.remove_unwanted_char == True:
+                        text = self.remove_unwanted_char_(text)
+                if self.normalize_arabic_unicode == True:
+                        text = self.normalize_arabic_unicode_(text)
+                if self.remove_unicode_and_special_character == True:
+                        text = self.remove_unicode_and_special_character_(text)
                 if self.remove_whitespace == True:
                         text = self.remove_whitespace_(text)
                 return text
             
 
         def remove_emojis_(self,text):
-                    """
-                    Remove emojis from the given text.
+                """
+                Remove emojis from the given text.
 
-                    This function reads a list of emojis from a CSV file named 'Emojis.csv' 
-                    and removes any occurrences of these emojis from the input text.
+                This function reads a list of emojis from a file named 'Emojis.txt' 
+                and removes any occurrences of these emojis from the input text.
 
-                    Args:
+                Args:
                         text (str): The input text from which emojis need to be removed.
 
-                    Returns:
-                        str: The text with emojis removed.
-                    """
-                    emojis = set(pd.read_csv('Emojis.csv')['Emojis'])
-                    text = [word for word in text if word not in emojis]
-                    return ''.join(text)
-
+                Returns:
+                        str: The text with emojis removed, with words separated by spaces.
+                """
+                with open("Emojis.txt", "r", encoding="utf-8") as file:
+                        emojis = file.read()
+                        emojis = set(emojis)
+                
+                text = "".join([word if word not in emojis else " " for word in text]  )
+                return text
+        
         def remove_hashtags_(self,text):
                 """remove all hashtags from text
                         Args:
@@ -175,7 +197,7 @@ class Text_Normalization:
                         Returns:
                             string: text without any hashtags
                 """   
-                text =  re.sub("#[ٱأإٲٳٵآ-ي٠-٩a-zA-Z0-9]+"," ", text)
+                text =  re.sub("#[\u0600-\u06FF\u0030-\u0039\u0041-\u005A\u0061-\u007A]+"," ", text)
                 return text   
 
         def remove_emails_(self,text):
@@ -208,7 +230,7 @@ class Text_Normalization:
                         Returns:
                             string: text without any mention
                 """   
-                text = re.sub("@[ٱأإٲٳٵآ-ي٠-٩a-zA-Z0-9]+"," ", text)
+                text = re.sub("@[\u0600-\u06FF\u0030-\u0039\u0041-\u005A\u0061-\u007A]+"," ", text)
                 return text
 
         def remove_html_tags_(self,text):
@@ -246,80 +268,34 @@ class Text_Normalization:
                 """    
                 text = re.sub('[A-Za-z]', "  ", text)
                 return text
-
-        def remove_hindi_letter_(self,text):
-                """remove Hindi lettter from the text
-
+        
+        def remove_stop_words_(self,text):
+                """remove all stopword from text
                         Args:
-                            text (string): input text contining Hindi letter
+                            text (string): input text containing stopwords
 
                         Returns:
-                            text: text without Hindi letter
-                """
-                text = re.sub("[\u0900-\u097F]", " ", text)
+                            string: text without stopwords
+                """  
+                stop = open('ArabicStopWord.txt','r', encoding='Utf-8')
+                StopWords = set(stop.read().split('\n'))
+                stop.close()
+                text = text.split()
+                text =' '.join(word for word in text if word not in StopWords)
                 return text
-
-        def remove_urdu_letter_(self,text):
-                """remove Urdu lettter from the text
-
-                        Args:
-                            text (string): input text contining Urdu letter
-
-                        Returns:
-                            text: text without Urdu letter
+        
+        def remove_al_(self, text):
                 """
-                pattern = "[\uFBAF\uFBB1\u0679\u067E\u0686\u0688\u0691\u0698\u06D2\u06D3\u06F5\u06F6\u076D\u069C\u0678]"
-                text = re.sub(pattern, " ", text)
-                return text
+                Remove occurrences of the Arabic definite article 'ال' from the text, 
+                except when it is part of the word 'الله' (Allah).
 
-        def remove_sindhi_letter_(self,text):
-            """Remove Sindhi letters from the text.
+                Args:
+                    text (str): The input text from which 'ال' should be removed.
 
-            Args:
-                text (string): Input text containing Sindhi letters.
-
-            Returns:
-                string: Text without Sindhi letters.
-            """
-            pattern = r"[\u06FE\u06FD\u067A\u067B\u067D\u067E\u067F\u0680\u0683\u0684\u0686\u0687\u068A\u068C\u068D\u068F\u0699\u06A6\u06A9\u06AA\u06AF\u06B1\u06B3\u06BB]"
-            text = re.sub(pattern, " ", text)  
-            return text
-
-        def remove_hebrew_letter_(self,text):
-                """remove Hebrew lettter from the text
-
-                        Args:
-                            text (string): input text contining Hebrew letter
-
-                        Returns:
-                            text: text without Hebrew letter
+                Returns:
+                    str: The text with 'ال' removed, except in the word 'الله'.
                 """
-                pattern = "[\u0590-\u05FF]"
-                text = re.sub(pattern, " ", text)
-                return text
-
-        def remove_latin_letter_(self,text):
-                """remove Latin lettter from the text
-
-                        Args:
-                            text (string): input text contining Latin letter
-
-                        Returns:
-                            text: text without Latin letter
-                """
-                text = re.sub("[ößàħüéèôäïêç]", " ", text)
-                return text
-
-        def remove_unwanted_char_(self,text):
-                """remove Unwanted char from the text
-
-                        Args:
-                            text (string): input text contining Unwanted char
-
-                        Returns:
-                            text: text without Unwanted char
-                """
-                text = re.sub("[눇ﻣ̲ﻥ̴ ٰھہノ§ヾ̯͡ ڼίɴ ٔ ٕﭿ눉مٓـ]", " ", text)
+                text = re.sub(r'ال(?!له)', " ", text)
                 return text
 
         def remove_arabic_diacritics_(self,text):
@@ -330,7 +306,7 @@ class Text_Normalization:
                             Returns:
                                     string: the modified text without diacritics
                 """
-                pattern = r'[\u0618\u0619\\u061A\u064B\u064C\u064D\u064E\u064F\u0650\u0651\u0652\u0653\u00AB\u00B7\uFDFC\u0651]+'
+                pattern = r'[\u0618\u0619\u061A\u064B\u064C\u064D\u064E\u064F\u0650\u0651\u0652\u0653\u00AB\u00B7\uFDFC\u0651]+'
                 text = re.sub(pattern, ' ', text)
                 return text
 
@@ -342,7 +318,7 @@ class Text_Normalization:
                             Returns:
                                 text after removing Arabic Tatweel
                 """
-                text = re.sub('[\u0640]', '', text)
+                text = re.sub('[\u0640]', ' ', text)
                 return text
 
         def convert_gaf_(self,text):
@@ -365,7 +341,6 @@ class Text_Normalization:
                 """
                 text = re.sub("پ", "ب", text)
                 return text
-
 
         def convert_che_(self,text):
                 """converts Che (چ) to Gimel (ج) in Arabic text.
@@ -457,7 +432,7 @@ class Text_Normalization:
                         Returns:
                             string: the modified text with Che replaced by Kaf
                 """
-                text = re.sub("ۆ", "و", text)
+                text = re.sub('ﯙ', 'و', text)
                 return text
 
         def remove_punctuations_(self,text):
@@ -484,40 +459,25 @@ class Text_Normalization:
                         str: The normalized text with Arabic Unicode characters replaced by their corresponding phrases.
 
                 """
-                arabic_unicode = [(r'ﷺ', 'صلى الله عليه و سلم'),
-                                    (r'ﷻ', 'جل جلاله'),
-                                    (r'﷽', 'بسم الله الرحمن الرحيم')]
-
-                for unicode, word in arabic_unicode:
-                        text = re.sub(unicode, word, text)
+                text = re.sub('ﷺ', 'صلى الله عليه و سلم', text)
+                text = re.sub('ﷻ', 'جل جلاله', text)
+                text = re.sub('﷽', 'بسم الله الرحمن الرحيم', text)
                 return text 
 
-        def remove_unicode_and_special_character_(self,text):
-                """remove special and unicode characters from the text
-                        Args:
-                            text (string): input text contining special characters
+        def remove_unicode_and_special_character_(self, text):
+                """
+                Remove special and unicode characters from the text.
 
-                        Returns:
-                            text: text without special characters
-                """          
-                Pattern = r'[\u2000-\u206F\u2460-\u24FF\u2070-\u218F\u2022-\u221E\u0E3F\u00A9\u00AE\u2117\u2120\u03B1-\u03C9\u0391-\u039F\u00BC-\u00BE\u0022-\u0027\u002A\u002B\u002F\u003C-\u003E\u0040\u005C\u005E\u0060\u007C\u007E\u00BC-\u00BE\u066A\u250A-\u25FF\u2B07\u02DB\u00A3\u0328\u300A\u300B\u00B2\uFF3E\u00B0\u032C\u0329\u0303\u030A\u0300-\u036F\u00BB\u200D\u0337\u0334\u032C\u0329\u0303\u030A\uFE0F]'
-                text = re.sub(Pattern, ' ', text)
+                Args:
+                    text (string): Input text containing special characters.
+
+                Returns:
+                    text: Text without special characters.
+                """
+                pattern = r'[\uf06f\u0023\u0026\u002A\u0040\u007E\u003C\u003E\u007C\u2018\u2019\u2022\u2026\u2122\u200b\u002B\u003D]'
+                text = re.sub(pattern, ' ', text)
                 return text
 
-        def remove_stop_words_(self,text):
-                """remove all stopword from text
-                        Args:
-                            text (string): input text containing stopwords
-
-                        Returns:
-                            string: text without stopwords
-                """  
-                stop = open('ArabicStopWord.txt','r', encoding='Utf-8')
-                StopWords = set(stop.read().split('\n'))
-                stop.close()
-                text = text.split()
-                text =' '.join(word for word in text if word not in StopWords)
-                return text
                     
         def remove_number_(self,text):
                 """remove numbers from the text
@@ -530,6 +490,7 @@ class Text_Normalization:
                 """
                 text = re.sub(r'\d+', ' ', text)
                 return text
+
         def remove_longest_than_(self,text):
                 """remove words that has length more than the longest word in arabic from the text
 
@@ -543,6 +504,7 @@ class Text_Normalization:
                         if len(word) >=16:
                                 text = text.replace(word, ' ')
                 return text
+
         def remove_duplicate_word_(self, text):
                 """remove consecutive duplicate words in a given text
 
@@ -567,7 +529,7 @@ class Text_Normalization:
                                 string: the modified text with single letters removed
                 """
 
-                pattern = r"\b([ٱأإٲٳٵآ-ي])\b(?!\w)"  
+                pattern = r"\b([\u0600-\u06FF])\b(?!\w)"  
                 text = re.sub(pattern, " ", text)
                 return text
 
@@ -581,8 +543,52 @@ class Text_Normalization:
                                 Returns:
                                 string: the modified text with duplicated letters removed
                 """
-                pattern = r"\b([ٱأإٲٳٵآ-ى])\1+\b(?!\w)"  
+                pattern = r"\b([\u0600-\u06FF])\1+\b(?!\w)"  
                 text = re.sub(pattern, " ", text)
+                return text
+        
+        def remove_currency_(self,text):
+                Pattern ='[$¢£¤¥֏؋߾߿৲৳৻૱௹฿៛₠₡₢₣₤₥₦₧₨₩₪₫€₮₯₰₱₲₳₴₵₶₷₸₹₺₻₼₽₾₿꠸＄￠﷼＄￡￥￦𑿝𑿞𑿟𑿠𞋿DZDBHDKMFDJFEGPIQDJODKWDLBPLYDMRUMADOMRQARSARSOSSDGSYPTNDAEDYER]' 
+                text = re.sub(Pattern, ' ', text)
+                return text
+
+        def remove_cyrillic_letter_(self,text):
+                text = re.sub("[\u0400-\u04FF]", " ", text)
+                return text
+
+        def remove_greek_letter_(self,text):
+                text = re.sub("[\u0370-\u03FF]", " ", text)
+                return text
+                
+
+        def remove_mathematical_operators_(self,text):
+                text = re.sub("[\u2200-\u22FF]", " ", text)
+                return text
+
+        def remove_latin_letter_(self,text):
+                text = re.sub("[\u0100-\u017F]", " ", text)
+                text = re.sub("[\u0080-\u00FF]", " ", text)
+                text = re.sub("[\u1D00-\u1D7F]", " ", text)
+                return text
+
+        def remove_unwanted_char_(self, text):
+                text = re.sub('[\u06B1\u069C\u1F592\u06FD\u06D2\u06D3\u066D\uA9C2\u05DD\u05D1\u0780\u0788\u1D17\uB791\uD558\uC0AC\uFBAF\u02DD\uFD3E\uFF1A\uFD3F\uA9C1\u06DD]', ' ', text)
+                return text
+
+        def convert_kurdish_tah_(self, text):
+                text = re.sub('[\u067A\u067C]', '\u062A', text)
+                return text
+        
+        def convert_kurdish_kha_(self, text):
+                text = re.sub('څ', 'خ', text)
+                return text
+        
+        def convert_kurdish_rah_(self,text):
+                text = re.sub('[ڕڑژ]', 'ر', text)
+                return text
+
+        def convert_kurdish_ga_(self , text):
+                text = re.sub('ڪ', 'ك', text)
                 return text
 
         def remove_whitespace_(self,text):

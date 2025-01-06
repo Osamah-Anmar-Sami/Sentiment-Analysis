@@ -14,11 +14,13 @@ def sentiment_percentage(data, target, figsize):
         matplotlib.pyplot.Figure: the generated plot object
     """
     fig, ax = plt.subplots(figsize = figsize)
-    ax.pie(data[target].value_counts(), 
-            labels=data[target].unique(),
-            colors=['#1de051', '#08ff4a'], 
-            autopct='%1.1f%%',
-            textprops = {'size': 'large'})
+    wedges, texts, autotexts = ax.pie(data[target].value_counts(), 
+                                      labels=data[target].unique(),
+                                      colors=['#07D107', '#068D06', '#08B208'], 
+                                      autopct='%1.1f%%',
+                                      textprops={'size': 'large'})
+    for autotext in autotexts:
+        autotext.set_color('white')
     plt.title('{} Percentage'.format(target))
     return plt.show()
 
@@ -36,7 +38,7 @@ def sentiment_counts(data, target, figsize):
          matplotlib.pyplot.Figure: the generated plot object
     """
     ax, fig = plt.subplots(figsize = figsize)
-    ax =sns.countplot(x=target, data=data, dodge=False, hue=target,  order= data[target].value_counts().index, hue_order =data[target].value_counts().index,  palette=sns.color_palette("Set2"), legend='full');
+    ax =sns.countplot(x=target, data=data, dodge=False, hue=target,  order= data[target].value_counts().index, hue_order =data[target].value_counts().index,  palette=sns.color_palette("Set2",3), legend='full');
     ax.set(xticklabels=[]) 
     ax.set(ylabel=None) 
     plt.title('{} Count'.format(target))

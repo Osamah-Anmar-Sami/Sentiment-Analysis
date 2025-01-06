@@ -4,19 +4,18 @@ import pandas as pd
 
 def confusion_matrix_(y_test, y_pred):
     """
-    Computes the confusion matrix for binary classification.
+    Create a confusion matrix DataFrame.
 
     Parameters:
-    y_test (list or array-like): True labels.
-    y_pred (list or array-like): Predicted labels.
+    true_positive (int): The number of true positive predictions.
+    false_positive (int): The number of false positive predictions.
+    true_negative (int): The number of true negative predictions.
+    false_negative (int): The number of false negative predictions.
 
     Returns:
-    pd.DataFrame: A confusion matrix with the following structure:
-                  - Rows represent the actual classes (Positive, Negative).
-                  - Columns represent the predicted classes (Positive, Negative).
-                  - The values represent the counts of True Positives, False Positives, False Negatives, and True Negatives.
+    pd.DataFrame: A DataFrame representing the confusion matrix with the counts of true positives, false positives,
+                  true negatives, and false negatives.
     """
-
     True_Positive, False_Positive =  0, 0
     True_Negative, False_Negative = 0, 0
 
@@ -35,21 +34,22 @@ def confusion_matrix_(y_test, y_pred):
                                      index=['Positive', 'Negative'])
     return Confusion_matrix
 
+    
+    return Confusion_matrix
 
 
 def confusion_matrix_display(confusion_matrix, name):
     """
-    Displays a heatmap of the given confusion matrix using seaborn.
+    Display the confusion matrix using a heatmap.
 
     Parameters:
-    confusion_matrix (array-like): The confusion matrix to be displayed.
-    name (str): The name or title to be displayed on the confusion matrix plot.
+    confusion_matrix (pd.DataFrame): The confusion matrix DataFrame to be displayed.
+    name (str): The name of the model or task for labeling the plot title.
 
     Returns:
-    None
+    None: This function does not return a value; it displays the confusion matrix as a heatmap.
     """
-
-    sns.heatmap(confusion_matrix, annot=True, cbar=False, cmap='YlGn', fmt='g');
+    sns.heatmap(confusion_matrix, annot=True, cbar=False, cmap='Greens', fmt='g');
     plt.xlabel("Prediction Label")
     plt.ylabel("Actual Label")
     plt.suptitle('Confusion Matrix Of {}'.format(name));
