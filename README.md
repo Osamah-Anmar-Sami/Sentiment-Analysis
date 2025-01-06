@@ -2,7 +2,7 @@
 This repository contains a Sentiment Analysis project that classifies the sentiment of text data as positive, negative, or neutral. The goal of this project is to build a model that can accurately determine the sentiment expressed in a given piece of text, which can be applied to various applications such as social media monitoring, customer feedback analysis, and more.
 
 # DataSet
-Arabic DataSet: https://github.com/elnagara/HARD-Arabic-Dataset/tree/master
+Arabic DataSet: https://www.kaggle.com/datasets/abdallaellaithy/330k-arabic-sentiment-reviews
 
 English DataSet: https://www.kaggle.com/datasets/lakshmi25npathi/imdb-dataset-of-50k-movie-reviews
 
