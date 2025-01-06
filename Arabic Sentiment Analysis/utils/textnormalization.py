@@ -2,6 +2,50 @@ import re
 import pandas as pd
 
 class Text_Normalization:
+        """
+                A class for performing text normalization tasks to preprocess and clean text data.
+
+                - remove_emojis (bool): Whether to remove emojis from the text.
+                - remove_hashtags (bool): Whether to remove hashtags from the text.
+                - remove_url (bool): Whether to remove URLs from the text.
+                - remove_mention (bool): Whether to remove mentions (@username) from the text.
+                - remove_html_tags (bool): Whether to remove HTML tags from the text.
+                - remove_new_line_char (bool): Whether to remove newline characters from the text.
+                - remove_english_letter (bool): Whether to remove English letters from the text.
+                - remove_stop_words (bool): Whether to remove common stop words from the text.
+                - remove_al (bool): Whether to remove the Arabic definite article "al".
+                - remove_arabic_diacritics (bool): Whether to remove Arabic diacritics.
+                - remove_arabic_tatweel (bool): Whether to remove Arabic tatweel (kashida).
+                - convert_gaf (bool): Whether to convert the Arabic letter "gaf" to its alternative.
+                - convert_pe (bool): Whether to convert the Arabic letter "pe" to its alternative.
+                - convert_che (bool): Whether to convert the Arabic letter "che" to its alternative.
+                - convert_ve (bool): Whether to convert the Arabic letter "ve" to its alternative.
+                - convert_alef (bool): Whether to convert the Arabic letter "alef" to its alternative.
+                - convert_alef_maqsura (bool): Whether to convert the Arabic letter "alef maqsura" to its alternative.
+                - convert_teh_marbuta (bool): Whether to convert the Arabic letter "teh marbuta" to its alternative.
+                - convert_kurdish_rah (bool): Whether to convert the Kurdish letter "rah" to its alternative.
+                - convert_ayin (bool): Whether to convert the Arabic letter "ayin" to its alternative.
+                - convert_la (bool): Whether to convert the Arabic letter "la" to its alternative.
+                - convert_kurdish_tah (bool): Whether to convert the Kurdish letter "tah" to its alternative.
+                - convert_kurdish_waw (bool): Whether to convert the Kurdish letter "waw" to its alternative.
+                - convert_kurdish_kha (bool): Whether to convert the Kurdish letter "kha" to its alternative.
+                - convert_kurdish_ga (bool): Whether to convert the Kurdish letter "ga" to its alternative.
+                - remove_greek_letter (bool): Whether to remove Greek letters from the text.
+                - remove_mathematical_operators (bool): Whether to remove mathematical operators from the text.
+                - remove_cyrillic_letter (bool): Whether to remove Cyrillic letters from the text.
+                - remove_latin_letter (bool): Whether to remove Latin letters from the text.
+                - remove_currency (bool): Whether to remove currency symbols from the text.
+                - remove_punctuations (bool): Whether to remove punctuation marks from the text.
+                - remove_number (bool): Whether to remove numbers from the text.
+                - remove_longest_than (int): The maximum length of a word to keep in the text.
+                - remove_duplicate_word (bool): Whether to remove duplicate words from the text.
+                - remove_single_letter (bool): Whether to remove single letters from the text.
+                - remove_duplicated_letter (bool): Whether to remove duplicated letters in a word.
+                - remove_unwanted_char (bool): Whether to remove unwanted characters from the text.
+                - normalize_arabic_unicode (bool): Whether to normalize Arabic unicode characters.
+                - remove_unicode_and_special_character (bool): Whether to remove unicode and special characters from the text.
+                - remove_whitespace (bool): Whether to remove excessive whitespace from the text.
+         """
         def __init__(self, 
                     remove_emojis,
                     remove_hashtags,
