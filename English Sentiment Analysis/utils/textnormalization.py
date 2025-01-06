@@ -6,6 +6,29 @@ import string
 
 
 class Text_Normalization:
+      """
+            A class for performing text normalization tasks to preprocess and clean text data.
+
+            - string_lower (bool): Whether to convert the text to lowercase.
+            - remove_emojis (bool): Whether to remove emojis from the text.
+            - remove_hashtags (bool): Whether to remove hashtags from the text.
+            - remove_emails (bool): Whether to remove email addresses from the text.
+            - remove_url (bool): Whether to remove URLs from the text.
+            - remove_mention (bool): Whether to remove mentions (@username) from the text.
+            - remove_html_tags (bool): Whether to remove HTML tags from the text.
+            - remove_new_line_char (bool): Whether to remove newline characters from the text.
+            - remove_duplicate_word (bool): Whether to remove duplicate words from the text.
+            - remove_single_letter (bool): Whether to remove single letters from the text.
+            - remove_duplicated_letter (bool): Whether to remove duplicated letters in a word.
+            - expand_contractions (bool): Whether to expand contractions (e.g., "don't" to "do not").
+            - remove_stop_words (bool): Whether to remove common stop words from the text.
+            - remove_unicode_and_special_character (bool): Whether to remove unicode and special characters from the text.
+            - remove_non_english (bool): Whether to remove non-English characters from the text.
+            - remove_punctuations (bool): Whether to remove punctuation marks from the text.
+            - remove_number (bool): Whether to remove numbers from the text.
+            - remove_longest_than (int): The maximum length of a word to keep in the text.
+            - remove_extra_whitespace (bool): Whether to remove extra whitespace between words in the text.
+        """
         def __init__(self, 
                      string_lower,
                      remove_emojis,
@@ -48,32 +71,7 @@ class Text_Normalization:
                      self.remove_extra_whitespace = remove_extra_whitespace
 
 
-        """
-        Initializes the Text_Normalization object with various normalization options.
 
-        Parameters:
-        - string_lower: Whether to convert the text to lowercase.
-        - remove_emojis: Whether to remove emojis from the text.
-        - remove_hashtags: Whether to remove hashtags from the text.
-        - remove_emails: Whether to remove email addresses from the text.
-        - remove_url: Whether to remove URLs from the text.
-        - remove_mention: Whether to remove mentions (e.g., @username) from the text.
-        - remove_html_tags: Whether to remove HTML tags from the text.
-        - remove_new_line_char: Whether to remove newline characters from the text.
-        - english_spell_correction: Whether to perform English spell correction.
-        - decrease_number_of_consecutive_repeated_letter: Whether to decrease the number of consecutive repeated letters.
-        - remove_duplicate_word: Whether to remove duplicate words from the text.
-        - remove_single_letter: Whether to remove single-letter words from the text.
-        - remove_duplicated_letter: Whether to remove duplicated letters within words.
-        - expand_contractions: Whether to expand contractions (e.g., can't to cannot).
-        - remove_stop_words: Whether to remove stop words from the text.
-        - remove_unicode_and_special_character: Whether to remove Unicode and special characters from the text.
-        - remove_punctuations: Whether to remove punctuation marks from the text.
-        - remove_number: Whether to remove numerical digits from the text.
-        - remove_non_english: Whether to remove non-English characters from the text.
-        - remove_longest_than: Whether to remove words longer than a specified length from the text.
-        - remove_extra_whitespace: Whether to remove extra whitespace from the text.
-        """
         
         def text_normalization(self, text):
                 if self.string_lower == True:
@@ -135,18 +133,18 @@ class Text_Normalization:
             """
             Remove emojis from the given text.
 
-            This function reads a list of emojis from a CSV file named 'Emojis.csv' 
-            and removes any occurrences of these emojis from the input text.
-
             Args:
                 text (str): The input text from which emojis need to be removed.
 
             Returns:
                 str: The text with emojis removed.
             """
-            emojis = set(pd.read_csv('Emojis.csv')['Emojis'])
-            text = [word for word in text if word not in emojis]
-            return ''.join(text)
+            with open("Emojis.txt", "r", encoding="utf-8") as file:
+                        emojis = file.read()
+                        emojis = set(emojis)
+                
+            text = "".join([word if word not in emojis else " " for word in text])
+            return text
 
         def delete_hashtags(self, text):   
                 """
@@ -163,7 +161,7 @@ class Text_Normalization:
                 Returns:
                     str: The text with all hashtags removed.
                 """
-                text =  re.sub("#[ا-ي٠-٩a-zA-Z0-9]+","", text)
+                text =  re.sub("#[\u0600-\u06FF\u0030-\u0039\u0041-\u005A\u0061-\u007A]+"," ", text)
                 return text   
 
         def delete_emails(self, text):
@@ -212,7 +210,7 @@ class Text_Normalization:
                 Returns:
                     str: The text with mentions removed.
                 """
-                text = re.sub("@[ا-ي٠-٩a-zA-Z0-9]+"," ", text)
+                text = re.sub("@[\u0600-\u06FF\u0030-\u0039\u0041-\u005A\u0061-\u007A]+"," ", text)
                 return text
 
         def delete_html_tags(self, text):    
@@ -378,10 +376,12 @@ class Text_Normalization:
                 Returns:
                     str: The text with stop words removed.
                 """
-                StopWords=open('EnglishStopWords.txt','r').read().split('\n')
+                stop = open('EnglishStopWords.txt','r', encoding='Utf-8')
+                StopWords = set(stop.read().split('\n'))
+                stop.close()
                 text = text.split()
-                text = [word for word in text if word not in StopWords]
-                return ' '.join(text)
+                text =' '.join(word for word in text if word not in StopWords)
+                return text
 
         def delete_punctuations(self, text):       
                 """
