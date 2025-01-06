@@ -174,9 +174,6 @@ class Text_Normalization:
                 """
                 Remove emojis from the given text.
 
-                This function reads a list of emojis from a file named 'Emojis.txt' 
-                and removes any occurrences of these emojis from the input text.
-
                 Args:
                         text (str): The input text from which emojis need to be removed.
 
@@ -474,8 +471,8 @@ class Text_Normalization:
                 Returns:
                     text: Text without special characters.
                 """
-                pattern = r'[\uf06f\u0023\u0026\u002A\u0040\u007E\u003C\u003E\u007C\u2018\u2019\u2022\u2026\u2122\u200b\u002B\u003D]'
-                text = re.sub(pattern, ' ', text)
+                Pattern = r'[\u2460-\u24FF\u2070-\u218F\u2022-\u221E\u0E3F\u00A9\u00AE\u2117\u2120\u03B1-\u03C9\u0391-\u039F\u00BC-\u00BE\u0022-\u0027\u002A\u002B\u002F\u003C-\u003E\u0040\u005C\u005E\u0060\u007C\u007E\u00BC-\u00BE\x96]'
+                text = re.sub(Pattern, ' ', text)
                 return text
 
                     
@@ -548,46 +545,160 @@ class Text_Normalization:
                 return text
         
         def remove_currency_(self,text):
+                """
+                Removes currency symbols from the given text.
+
+                This method uses a predefined regular expression pattern to identify and 
+                replace various currency symbols (e.g., $, €, ¥, ₹, etc.) with a space (' '). 
+
+                Args:
+                        text (str): The input string from which currency symbols should be removed.
+
+                Returns:
+                        str: The processed string with all currency symbols replaced by a space.
+
+                """
                 Pattern ='[$¢£¤¥֏؋߾߿৲৳৻૱௹฿៛₠₡₢₣₤₥₦₧₨₩₪₫€₮₯₰₱₲₳₴₵₶₷₸₹₺₻₼₽₾₿꠸＄￠﷼＄￡￥￦𑿝𑿞𑿟𑿠𞋿DZDBHDKMFDJFEGPIQDJODKWDLBPLYDMRUMADOMRQARSARSOSSDGSYPTNDAEDYER]' 
                 text = re.sub(Pattern, ' ', text)
                 return text
 
         def remove_cyrillic_letter_(self,text):
+                """
+                Removes Cyrillic characters from the given text.
+
+                This method uses a regular expression to identify and replace all 
+                characters in the Cyrillic Unicode block (U+0400 to U+04FF) with a space (' '). 
+
+                Args:
+                        text (str): The input string from which Cyrillic characters should be removed.
+
+                Returns:
+                        str: The processed string with all Cyrillic characters replaced by a space.              ."
+                """
                 text = re.sub("[\u0400-\u04FF]", " ", text)
                 return text
 
         def remove_greek_letter_(self,text):
+                """
+                Removes Greek characters from the given text.
+
+                This method uses a regular expression to identify and replace all 
+                characters in the Greek Unicode block (U+0370 to U+03FF) with a space (' '). 
+
+                Args:
+                        text (str): The input string from which Cyrillic characters should be removed.
+
+                Returns:
+                        str: The processed string with all Greek characters replaced by a space.              ."
+                """
                 text = re.sub("[\u0370-\u03FF]", " ", text)
                 return text
                 
 
         def remove_mathematical_operators_(self,text):
+                 """
+                Removes Mathmetical operators from the given text.
+
+                This method uses a regular expression to identify and replace all 
+                characters in the  Mathmetical operators Unicode block (U+0370 to U+03FF) with a space (' '). 
+
+                Args:
+                        text (str): The input string from which Cyrillic characters should be removed.
+
+                Returns:
+                        str: The processed string with all  Mathmetical operators replaced by a space.              ."
+                """
                 text = re.sub("[\u2200-\u22FF]", " ", text)
                 return text
 
         def remove_latin_letter_(self,text):
+                """
+                        Removes extended Latin characters from the given text.
+
+                        This method uses regular expressions to identify and replace all 
+                        characters in the following Latin Unicode blocks with a space (' '):
+                                - Latin Extended-A (U+0100 to U+017F)
+                                - Latin-1 Supplement (U+0080 to U+00FF)
+                                - Phonetic Extensions (U+1D00 to U+1D7F)
+
+                        Args:
+                                text (str): The input string from which extended Latin characters should be removed.
+
+                        Returns:
+                                str: The processed string with all extended Latin characters replaced by a space.
+                """
                 text = re.sub("[\u0100-\u017F]", " ", text)
                 text = re.sub("[\u0080-\u00FF]", " ", text)
                 text = re.sub("[\u1D00-\u1D7F]", " ", text)
                 return text
 
         def remove_unwanted_char_(self, text):
+                 """
+                        Removes specific unwanted characters from the given text.
+
+                        This method uses a predefined regular expression pattern to identify 
+                        and replace specific characters (defined by their Unicode code points) 
+                        with a space (' '). These characters may include symbols, marks, or 
+                        script-specific characters.
+
+                        Args:
+                                text (str): The input string from which unwanted characters should be removed.
+
+                        Returns:
+                                str: The processed string with the specified unwanted characters replaced by a space.
+                """
                 text = re.sub('[\u06B1\u069C\u1F592\u06FD\u06D2\u06D3\u066D\uA9C2\u05DD\u05D1\u0780\u0788\u1D17\uB791\uD558\uC0AC\uFBAF\u02DD\uFD3E\uFF1A\uFD3F\uA9C1\u06DD]', ' ', text)
                 return text
 
         def convert_kurdish_tah_(self, text):
+                """
+                        Converts Kurdish-specific 'Tah' (ٺ, ټ) characters to the standard Arabic 'Tah' character (ت).
+
+                        Args:
+                                text (str): The input string containing Kurdish-specific 'Tah' characters.
+
+                        Returns:
+                                str: The processed string with all instances of U+067A and U+067C replaced by U+062A.
+                """
                 text = re.sub('[\u067A\u067C]', '\u062A', text)
                 return text
         
         def convert_kurdish_kha_(self, text):
+                """
+                        Converts Kurdish-specific 'Kha' (څ) characters to the standard Arabic 'Kha' character (خ).
+
+                        Args:
+                                text (str): The input string containing Kurdish-specific 'Kha' characters.
+
+                        Returns:
+                                str: The processed string with all instances of څ replaced by خ.
+                """
                 text = re.sub('څ', 'خ', text)
                 return text
         
         def convert_kurdish_rah_(self,text):
+                """
+                        Converts Kurdish-specific 'Rah' (ڕڑژ) characters to the standard Arabic 'Rah' character (ر).
+
+                        Args:
+                                text (str): The input string containing Kurdish-specific 'Rah' characters.
+
+                        Returns:
+                                str: The processed string with all instances of ڕڑژ replaced by ر.
+                """
                 text = re.sub('[ڕڑژ]', 'ر', text)
                 return text
 
         def convert_kurdish_ga_(self , text):
+                 """
+                        Converts Kurdish-specific 'Ga' (ڪ) characters to the standard Arabic 'Kaf' character (ك).
+
+                        Args:
+                                text (str): The input string containing Kurdish-specific 'Ga' characters.
+
+                        Returns:
+                                str: The processed string with all instances of ڪ replaced by ك.
+                """
                 text = re.sub('ڪ', 'ك', text)
                 return text
 
