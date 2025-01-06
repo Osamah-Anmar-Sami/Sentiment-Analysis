@@ -7,13 +7,14 @@ Arabic DataSet: https://www.kaggle.com/datasets/abdallaellaithy/330k-arabic-sent
 English DataSet: https://www.kaggle.com/datasets/lakshmi25npathi/imdb-dataset-of-50k-movie-reviews
 
 # Pre Trained Word Embedding
-* Fasttext : https://fasttext.cc/docs/en/crawl-vectors.html
+* Aravec : https://github.com/bakrianoo/aravec  (Arabic Only)
 * Glove : https://nlp.stanford.edu/projects/glove/
 
 
 # Other Pre Trained Word Embedding
-* Google : https://www.kaggle.com/datasets/adarshsng/googlenewsvectors (English Only)
-* Aravec : https://github.com/bakrianoo/aravec  (Arabic Only)
+* Google : https://www.kaggle.com/datasets/adarshsng/googlenewsvectors
+* Fasttext : https://fasttext.cc/docs/en/crawl-vectors.html
+
 
 
 # Utils Folder
@@ -44,12 +45,6 @@ English DataSet: https://www.kaggle.com/datasets/lakshmi25npathi/imdb-dataset-of
 * pyarabic
 * and many other 
 
-# Preprocessing
-Before feeding the data into the model, several preprocessing steps are performed:
-
-Tokenization: Breaking down text into individual words or tokens.
-Lowercasing: Converting all text to lowercase to ensure uniformity.
-Stopword Removal: Removing common words that do not contribute to sentiment.
 
 # Model
 The model used in this project is a machine learning classifier trained on the preprocessed text data. Several models have been experimented with, including:
