@@ -62,7 +62,7 @@ The model used in this project is a machine learning classifier trained on the p
 
 #  Installation
 ```bash
-git clone https://github.com/Osama-Anmar/Sentiment-Analysis.git
+git clone https://github.com/Osama-Anmar-Sami/Sentiment-Analysis.git
 cd Sentiment-Analysis
 pip install -r requirements.txt
 ```
