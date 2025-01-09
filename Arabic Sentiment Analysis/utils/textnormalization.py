@@ -73,6 +73,7 @@ class Text_Normalization:
                     convert_kurdish_kha,
                     convert_kurdish_ga,
                     remove_greek_letter,
+                    remove_hindi_letter,
                     remove_mathematical_operators,
                     remove_cyrillic_letter,
                     remove_latin_letter,
@@ -114,6 +115,7 @@ class Text_Normalization:
                 self.convert_kurdish_kha = convert_kurdish_kha
                 self.convert_kurdish_ga = convert_kurdish_ga
                 self.remove_greek_letter = remove_greek_letter
+                self.remove_hindi_letter = remove_hindi_letter
                 self.remove_mathematical_operators = remove_mathematical_operators
                 self.remove_cyrillic_letter = remove_cyrillic_letter
                 self.remove_latin_letter = remove_latin_letter
@@ -131,6 +133,8 @@ class Text_Normalization:
 
 
         def text_normalization(self, text):
+                if self.remove_al == True:
+                        text = self.remove_al_(text)
                 if self.remove_emojis == True:
                     text = self.remove_emojis_(text)
                 if self.remove_hashtags == True:
@@ -147,8 +151,6 @@ class Text_Normalization:
                         text = self.remove_english_letter_(text)
                 if self.remove_stop_words == True:
                         text = self.remove_stop_words_(text)
-                if self.remove_al == True:
-                        text = self.remove_al_(text)
                 if self.remove_arabic_diacritics == True:
                         text = self.remove_arabic_diacritics_(text)
                 if self.remove_arabic_tatweel == True:
@@ -185,6 +187,8 @@ class Text_Normalization:
                         text = self.remove_punctuations_(text)
                 if self.remove_greek_letter == True:
                         text = self.remove_greek_letter_(text)
+                if self.remove_hindi_letter == True:
+                        text = self.remove_hindi_letter_(text)
                 if self.remove_mathematical_operators == True:
                         text = self.remove_mathematical_operators_(text)
                 if self.remove_cyrillic_letter == True:
@@ -336,7 +340,7 @@ class Text_Normalization:
                 Returns:
                     str: The text with 'ال' removed, except in the word 'الله'.
                 """
-                text = re.sub(r'ال(?!له)', " ", text)
+                text = re.sub(r'ال(?!له)(?!$)', " ", text)
                 return text
 
         def remove_arabic_diacritics_(self,text):
@@ -363,7 +367,7 @@ class Text_Normalization:
                 return text
 
         def convert_gaf_(self,text):
-                """converts Gaf (گ) to Kaph (ك) in Arabic text.
+                """   converts Gaf (گ) to Kaph (ك) in Arabic text.
                         Args:
                             text (string): the Arabic text to convert
 
@@ -486,7 +490,7 @@ class Text_Normalization:
                 """         
                 Punctuation  = '''`”؛،؟¿¡۔，.,-!"\“'()-./٬:;?[]^_`{}'''
                 for punctuation in Punctuation:
-                        text = text.replace(punctuation, ' ')
+                        text = text.replace(punctuation, '  ')
                 return text
 
         def normalize_arabic_unicode_(self,text):
@@ -507,15 +511,13 @@ class Text_Normalization:
 
         def remove_unicode_and_special_character_(self, text):
                 """
-                Remove special and unicode characters from the text.
-
-                Args:
-                    text (string): Input text containing special characters.
-
-                Returns:
-                    text: Text without special characters.
+                                Remove special and unicode characters from the text.
+                        Args:
+                                text (string): Input text containing special characters.
+                        Returns:
+                                text: Text without special characters.
                 """
-                Pattern = r'[\u2460-\u24FF\u2070-\u218F\u2022-\u221E\u0E3F\u00A9\u00AE\u2117\u2120\u03B1-\u03C9\u0391-\u039F\u00BC-\u00BE\u0022-\u0027\u002A\u002B\u002F\u003C-\u003E\u0040\u005C\u005E\u0060\u007C\u007E\u00BC-\u00BE\x96]'
+                Pattern = r'[\u2000-\u206F\u2460-\u24FF\u2070-\u218F\u2022-\u221E\u0E3F\u00A9\u00AE\u2117\u2120\u03B1-\u03C9\u0391-\u039F\u00BC-\u00BE\u0022-\u0027\u002A\u002B\u002F\u003C-\u003E\u0040\u005C\u005E\u0060\u007C\u007E\u00BC-\u00BE\u066A\u250A-\u25FF\u2B07\u02DB\u00A3\u0328\u300A\u300B\u00B2\uFF3E\u00B0\u032C\u0329\u0303\u030A\u0300-\u036F\u00BB\u200D\u0337\u0334\u032C\u0329\u0303\u030A\uFE0F\u1F592]'
                 text = re.sub(Pattern, ' ', text)
                 return text
 
@@ -556,7 +558,7 @@ class Text_Normalization:
                             string: text without any duplicate words
                 """          ""
                 pattern = r'\b(\w+)(\s+)(\1+)\b'
-                text = re.sub(pattern, r'\1', text)
+                text = re.sub(pattern, r' \1 ', text)
                 return text
 
         def remove_single_letter_(self,text):
@@ -640,19 +642,32 @@ class Text_Normalization:
                 
 
         def remove_mathematical_operators_(self,text):
-                 """
-                Removes Mathmetical operators from the given text.
+                """
+                        Removes Mathmetical operators from the given text.
 
-                This method uses a regular expression to identify and replace all 
-                characters in the  Mathmetical operators Unicode block (U+0370 to U+03FF) with a space (' '). 
+                        This method uses a regular expression to identify and replace all 
+                        characters in the  Mathmetical operators Unicode block (U+0370 to U+03FF) with a space (' '). 
 
-                Args:
-                        text (str): The input string from which Cyrillic characters should be removed.
+                        Args:
+                                text (str): The input string from which Cyrillic characters should be removed.
 
-                Returns:
-                        str: The processed string with all  Mathmetical operators replaced by a space.              ."
+                        Returns:
+                                str: The processed string with all  Mathmetical operators replaced by a space.              ."
                 """
                 text = re.sub("[\u2200-\u22FF]", " ", text)
+                return text
+
+
+        def remove_hindi_letter_(self,text):
+                """remove Hindi lettter from the text
+
+                        Args:
+                            text (string): input text contining Hindi letter
+
+                        Returns:
+                            text: text without Hindi letter
+                """
+                text = re.sub("[\u0900-\u097F]", " ", text)
                 return text
 
         def remove_latin_letter_(self,text):
@@ -677,7 +692,7 @@ class Text_Normalization:
                 return text
 
         def remove_unwanted_char_(self, text):
-                 """
+                """
                         Removes specific unwanted characters from the given text.
 
                         This method uses a predefined regular expression pattern to identify 
@@ -691,7 +706,7 @@ class Text_Normalization:
                         Returns:
                                 str: The processed string with the specified unwanted characters replaced by a space.
                 """
-                text = re.sub('[\u06B1\u069C\u1F592\u06FD\u06D2\u06D3\u066D\uA9C2\u05DD\u05D1\u0780\u0788\u1D17\uB791\uD558\uC0AC\uFBAF\u02DD\uFD3E\uFF1A\uFD3F\uA9C1\u06DD]', ' ', text)
+                text = re.sub('[\u06B1\u069C\u1F592\u06FD\u06D2\u06D3\u066D\uA9C2\u05DD\u05D1\u0780\u0788\u1D17\uB791\uD558\uC0AC\uFBAF\u02DD\uFD3E\uFF1A\uFD3F\uA9C1\u06DD\uB207\uB209]', ' ', text)
                 return text
 
         def convert_kurdish_tah_(self, text):
@@ -734,7 +749,7 @@ class Text_Normalization:
                 return text
 
         def convert_kurdish_ga_(self , text):
-                 """
+                """
                         Converts Kurdish-specific 'Ga' (ڪ) characters to the standard Arabic 'Kaf' character (ك).
 
                         Args:

@@ -28,6 +28,7 @@ text_normalization = Text_Normalization(remove_emojis = True,
                                         convert_kurdish_kha = True,
                                         convert_kurdish_ga = True,
                                         remove_greek_letter = True,
+                                        remove_hindi_letter = True,
                                         remove_mathematical_operators = True,
                                         remove_cyrillic_letter = True,
                                         remove_latin_letter = True,
@@ -59,7 +60,7 @@ def sentiment_analysis_transformers(data):
     Returns:
     None: This function does not return a value; it prints the sentiment analysis results for each review.
     """
-    sentiment_pipeline = pipeline(task='text-classification', model='CAMeL-Lab/bert-base-arabic-camelbert-da-sentiment', device=0)
+    sentiment_pipeline = pipeline(task='text-classification', model="Ammar-alhaj-ali/arabic-MARBERT-sentiment", device=0)
     for review, sentiment in zip(data, sentiment_pipeline(data, truncation=False)):
         print(f"Review: {review}\nSentiment: {sentiment.get('label').title()}\n")
 

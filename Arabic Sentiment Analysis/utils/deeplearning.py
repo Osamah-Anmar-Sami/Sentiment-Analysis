@@ -36,7 +36,7 @@ def lstm_(vocab_size, embedding_dim, max_length, units, embeddings_matrix):
                 tf.keras.Sequential: A compiled LSTM model.
             """
             model = tf.keras.Sequential([
-                Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length, weights = [embeddings_matrix],  trainable = True),
+                Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length, weights = [embeddings_matrix],  trainable = False),
                 LSTM(units=units),
                 Dense(1, activation='sigmoid')
                 ])     
@@ -57,7 +57,7 @@ def gru_(vocab_size, embedding_dim, max_length, units, embeddings_matrix):
                 tf.keras.Sequential: A compiled GRU-based neural network model.
             """
             model = tf.keras.Sequential([
-                Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length,  weights = [embeddings_matrix], trainable = True),
+                Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length,  weights = [embeddings_matrix], trainable = False),
                 GRU(units=units),
                 Dense(1, activation='sigmoid')
                 ])     
@@ -79,7 +79,7 @@ def bidirectional_lstm(vocab_size, embedding_dim, max_length, units, embeddings_
                 keras.Sequential: A compiled Bidirectional LSTM model.
             """
             model = keras.Sequential([
-                Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length, weights = [embeddings_matrix],  trainable = True),
+                Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length, weights = [embeddings_matrix],  trainable = False),
                 Bidirectional(LSTM(units=units)),
                 Dense(1, activation='sigmoid')
                 ])     
