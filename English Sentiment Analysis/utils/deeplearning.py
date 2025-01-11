@@ -16,8 +16,8 @@ def callbacks_ ():
         Returns:
             tuple: A tuple containing the ReduceLROnPlateau and EarlyStopping callbacks.
         """
-        reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.3, patience=3, min_lr=0.001, mode = 'min')
-        early_stop = EarlyStopping(monitor='val_loss', patience=3, restore_best_weights=True,)
+        reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.2, patience=2, min_lr=0.0001, mode = 'min')
+        early_stop = EarlyStopping(monitor='val_loss', patience=2, restore_best_weights=True,)
 
         return reduce_lr, early_stop
 
@@ -96,7 +96,7 @@ def model_compile(model) :
             Returns:
                 None: The function modifies the model in place and does not return anything.
             """
-            return model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.001),
+            return model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.0001),
                             loss=tf.keras.losses.BinaryCrossentropy(),
                             metrics= ['accuracy'])
     

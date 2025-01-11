@@ -6,7 +6,7 @@ import string
 
 
 class Text_Normalization:
-      """
+        """
             A class for performing text normalization tasks to preprocess and clean text data.
 
             - string_lower (bool): Whether to convert the text to lowercase.
@@ -23,7 +23,7 @@ class Text_Normalization:
             - expand_contractions (bool): Whether to expand contractions (e.g., "don't" to "do not").
             - remove_stop_words (bool): Whether to remove common stop words from the text.
             - remove_unicode_and_special_character (bool): Whether to remove unicode and special characters from the text.
-            - remove_non_english (bool): Whether to remove non-English characters from the text.
+            - remove_latin_letter (bool): Whether to remove latin letters from the text.
             - remove_punctuations (bool): Whether to remove punctuation marks from the text.
             - remove_number (bool): Whether to remove numbers from the text.
             - remove_longest_than (int): The maximum length of a word to keep in the text.
@@ -44,7 +44,7 @@ class Text_Normalization:
                      expand_contractions,
                      remove_stop_words,
                      remove_unicode_and_special_character,
-                     remove_non_english,
+                     remove_latin_letter,
                      remove_punctuations,
                      remove_number,
                      remove_longest_than,
@@ -64,7 +64,7 @@ class Text_Normalization:
                      self.expand_contractions = expand_contractions
                      self.remove_stop_words = remove_stop_words
                      self.remove_unicode_and_special_character = remove_unicode_and_special_character
-                     self.remove_non_english = remove_non_english
+                     self.remove_latin_letter = remove_latin_letter
                      self.remove_punctuations = remove_punctuations
                      self.remove_number = remove_number
                      self.remove_longest_than = remove_longest_than
@@ -77,41 +77,41 @@ class Text_Normalization:
                 if self.string_lower == True:
                         text = self.string_lower_(text)
                 if self.remove_emojis == True:
-                        text = self.delete_emojis(text)
+                        text = self.remove_emojis_(text)
                 if self.remove_hashtags == True:
-                        text = self.delete_hashtags(text)
+                        text = self.remove_hashtags_(text)
                 if self.remove_emails == True:
-                        text = self.delete_emails(text)
+                        text = self.remove_emails_(text)
                 if self.remove_url == True:
-                        text = self.delete_url(text)
+                        text = self.remove_url_(text)
                 if self.remove_mention == True:
-                        text = self.delete_mention(text)
+                        text = self.remove_mention_(text)
                 if self.remove_html_tags == True:
-                        text = self.delete_html_tags(text)
+                        text = self.remove_html_tags_(text)
                 if self.remove_new_line_char == True:
-                        text = self.delete_new_line_char(text)
+                        text = self.remove_new_line_char_(text)
                 if self.expand_contractions == True:
                         text = self.expand_contractions_(text)
                 if self.remove_duplicate_word == True:
-                        text = self.delete_duplicate_word(text)
+                        text = self.remove_duplicate_word_(text)
                 if self.remove_single_letter == True:
-                        text = self.delete_single_letter(text)
+                        text = self.remove_single_letter_(text)
                 if self.remove_duplicated_letter == True:
-                        text = self.delete_duplicated_letter(text)
+                        text = self.remove_duplicated_letter_(text)
                 if self.remove_unicode_and_special_character == True:
-                        text = self.delete_unicode_and_special_character(text)
-                if self.remove_non_english == True:
-                        text = self.delete_non_english(text)
+                        text = self.remove_unicode_and_special_character_(text)
+                if self.remove_latin_letter == True:
+                        text = self.remove_latin_letter_(text)
                 if self.remove_punctuations == True:
-                        text = self.delete_punctuations(text)
+                        text = self.remove_punctuations_(text)
                 if self.remove_stop_words == True:
-                        text = self.delete_stop_words(text)
+                        text = self.remove_stop_words_(text)
                 if self.remove_number == True:
-                        text = self.delete_number(text)
+                        text = self.remove_number_(text)
                 if self.remove_longest_than == True:
-                        text = self.delete_longest_than(text)    
+                        text = self.remove_longest_than_(text)    
                 if self.remove_extra_whitespace == True:
-                        text = self.delete_extra_whitespace(text)
+                        text = self.remove_extra_whitespace_(text)
 
                 return text
                 
@@ -129,7 +129,7 @@ class Text_Normalization:
                 text = text.lower()
                 return text
 
-        def delete_emojis(self,text):
+        def remove_emojis_(self,text):
             """
             Remove emojis from the given text.
 
@@ -146,7 +146,7 @@ class Text_Normalization:
             text = "".join([word if word not in emojis else " " for word in text])
             return text
 
-        def delete_hashtags(self, text):   
+        def remove_hashtags_(self, text):   
                 """
                 Remove hashtags from the given text.
 
@@ -164,7 +164,7 @@ class Text_Normalization:
                 text =  re.sub("#[\u0600-\u06FF\u0030-\u0039\u0041-\u005A\u0061-\u007A]+"," ", text)
                 return text   
 
-        def delete_emails(self, text):
+        def remove_emails_(self, text):
                 """
                 Remove email addresses from the given text.
 
@@ -180,7 +180,7 @@ class Text_Normalization:
                 text = re.sub("[a-zA-Z0-9-_.]+@[a-zA-Z]+.[a-zA-Z]+"," ", text)  
                 return text 
 
-        def delete_url(self, text):
+        def remove_url_(self, text):
                 """
                 Remove URLs from the given text.
 
@@ -196,7 +196,7 @@ class Text_Normalization:
                 text = re.sub('www.+', ' ', text)
                 return text
 
-        def delete_mention(self, text):
+        def remove_mention_(self, text):
                 """
                 Remove mentions from the given text.
 
@@ -213,7 +213,7 @@ class Text_Normalization:
                 text = re.sub("@[\u0600-\u06FF\u0030-\u0039\u0041-\u005A\u0061-\u007A]+"," ", text)
                 return text
 
-        def delete_html_tags(self, text):    
+        def remove_html_tags_(self, text):    
                 """
                 Remove HTML tags from the given text.
 
@@ -226,7 +226,7 @@ class Text_Normalization:
                 text = re.sub("<.*?>", ' ', text)
                 return text
 
-        def delete_new_line_char(self, text):    
+        def remove_new_line_char_(self, text):    
                 """
                 Removes newline characters from the given text.
 
@@ -243,7 +243,7 @@ class Text_Normalization:
                 text = re.sub(Pattern, ' ', text)
                 return text
         
-        def delete_unicode_and_special_character(self, text):    
+        def remove_unicode_and_special_character_(self, text):    
                 """
                 Remove unicode and special characters from the given text.
 
@@ -257,11 +257,11 @@ class Text_Normalization:
                 Returns:
                     str: The text with unicode and special characters replaced by spaces.
                 """
-                Pattern = r'[\u2460-\u24FF\u2070-\u218F\u2022-\u221E\u0E3F\u00A9\u00AE\u2117\u2120\u03B1-\u03C9\u0391-\u039F\u00BC-\u00BE\u0022-\u0027\u002A\u002B\u002F\u003C-\u003E\u0040\u005C\u005E\u0060\u007C\u007E\u00BC-\u00BE\x96]'
+                Pattern = r'[\u2460-\u24FF\u2070-\u218F\u2022-\u221E\u0E3F\u00A9\u00AE\u2117\u2120\u03B1-\u03C9\u0391-\u039F\u00BC-\u00BE\u0022-\u0027\u002A\u002B\u002F\u003C-\u003E\u0040\u005C\u005E\u0060\u007C\u007E\u00BC-\u00BE\u201C\u201D\u2019\x96\x7f]'
                 text = re.sub(Pattern, ' ', text)
                 return text
         
-        def delete_number(self, text):
+        def remove_number_(self, text):
                 """
                 Remove all numeric characters from the given text.
 
@@ -274,25 +274,28 @@ class Text_Normalization:
                 text = re.sub(r'\d+', '', text)
                 return text
 
-        def delete_non_english(self,text):
+        def remove_latin_letter_(self,text):
                 """
-                Remove non-English characters from the input text.
+                        Removes extended Latin characters from the given text.
 
-                This function filters out any characters that are not part of the English alphabet,
-                digits, or common punctuation marks. It splits the input text into words and retains
-                only those words that consist entirely of English letters, digits, or punctuation.
+                        This method uses regular expressions to identify and replace all 
+                        characters in the following Latin Unicode blocks with a space (' '):
+                                - Latin Extended-A (U+0100 to U+017F)
+                                - Latin-1 Supplement (U+0080 to U+00FF)
+                                - Phonetic Extensions (U+1D00 to U+1D7F)
 
-                Args:
-                    text (str): The input text to be normalized.
+                        Args:
+                                text (str): The input string from which extended Latin characters should be removed.
 
-                Returns:
-                    str: The normalized text containing only English letters, digits, and punctuation.
+                        Returns:
+                                str: The processed string with all extended Latin characters replaced by a space.
                 """
-                pattern = re.compile(r'[^a-zA-Z0-9\s' + re.escape(string.punctuation) + ']')
-                text = re.sub(pattern, ' ', text)
+                text = re.sub("[\u0100-\u017F]", " ", text)
+                text = re.sub("[\u0080-\u00FF]", " ", text)
+                text = re.sub("[\u1D00-\u1D7F]", " ", text)
                 return text
 
-        def delete_longest_than(self, text):
+        def remove_longest_than_(self, text):
                 """
                 Removes words from the input text that are longer than or equal to 46 characters.
 
@@ -307,7 +310,7 @@ class Text_Normalization:
                         text = text.replace(word, '')
                 return text
 
-        def delete_duplicate_word(self, text):
+        def remove_duplicate_word_(self, text):
                 """
                 Remove consecutive duplicate words from the given text.
 
@@ -321,7 +324,7 @@ class Text_Normalization:
                 text = re.sub(pattern, r'\1', text)
                 return text
             
-        def delete_single_letter(self, text):
+        def remove_single_letter_(self, text):
                     """
                     Remove single letter words from the given text.
 
@@ -339,7 +342,7 @@ class Text_Normalization:
                     text = re.sub(pattern, " ", text)
                     return text
             
-        def delete_duplicated_letter(self, text):
+        def remove_duplicated_letter_(self, text):
                     """
                     Remove duplicated consecutive letters in each word of the given text.
 
@@ -366,7 +369,7 @@ class Text_Normalization:
                 text = contractions_(text)
                 return text
             
-        def delete_stop_words(self, text):  
+        def remove_stop_words_(self, text):  
                 """
                 Remove stop words from the given text.
 
@@ -383,7 +386,7 @@ class Text_Normalization:
                 text =' '.join(word for word in text if word not in StopWords)
                 return text
 
-        def delete_punctuations(self, text):       
+        def remove_punctuations_(self, text):       
                 """
                 Remove punctuations from the given text.
 
@@ -401,7 +404,7 @@ class Text_Normalization:
                     text = text.replace(punctuation, ' ')
                 return text
 
-        def delete_extra_whitespace(self, text):
+        def remove_extra_whitespace_(self, text):
                 """
                 remove extra whitespaces at the beginning and end of the text
 

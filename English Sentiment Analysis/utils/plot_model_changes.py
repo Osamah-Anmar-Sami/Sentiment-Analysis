@@ -21,5 +21,5 @@ def plot_changes(histoty):
                     plt.plot(loss, label='Loss')
                     plt.plot(val_accuracy, label='Val_Accuracy')
                     plt.plot(val_loss, label='Val_Loss')
-                    plt.legend()
+                    plt.legend(loc='upper right')
                     return plt.show()
