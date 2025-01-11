@@ -4,7 +4,7 @@ This repository contains a Sentiment Analysis project that classifies the sentim
 # DataSet
 Arabic DataSet: https://github.com/elnagara/HARD-Arabic-Dataset/tree/master
 
-English DataSet: https://www.kaggle.com/datasets/lakshmi25npathi/imdb-dataset-of-50k-movie-reviews
+English DataSet: https://www.kaggle.com/datasets/mejbahahammad/imdb-movie-reviews-dataset
 
 # Pre Trained Word Embedding
 * Aravec : https://github.com/bakrianoo/aravec
