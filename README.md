@@ -31,7 +31,6 @@ English DataSet: https://www.kaggle.com/datasets/lakshmi25npathi/imdb-dataset-of
 * word_vector.py
 * wordcloud.py
 * contraction_expand.py
-* remove_emojis.py
 * transformer.py
 * model_inference.py
 
