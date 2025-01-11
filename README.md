@@ -7,7 +7,7 @@ Arabic DataSet: https://github.com/elnagara/HARD-Arabic-Dataset/tree/master
 English DataSet: https://www.kaggle.com/datasets/lakshmi25npathi/imdb-dataset-of-50k-movie-reviews
 
 # Pre Trained Word Embedding
-* Aravec : https://github.com/bakrianoo/aravec  (Arabic Only)
+* Aravec : https://github.com/bakrianoo/aravec
 * Glove : https://nlp.stanford.edu/projects/glove/
 
 
