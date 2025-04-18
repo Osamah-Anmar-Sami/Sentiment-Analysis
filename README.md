@@ -2,7 +2,7 @@
 This repository contains a Sentiment Analysis project that classifies the sentiment of text data as positive, or negative. The goal of this project is to build a model that can accurately determine the sentiment expressed in a given piece of text, which can be applied to various applications such as social media monitoring, customer feedback analysis, and more.
 
 # DataSet
-Arabic DataSet: https://github.com/elnagara/HARD-Arabic-Dataset/tree/master
+Arabic DataSet: https://github.com/elnagara/HARD-Arabic-Dataset/tree/master <\br>
 English DataSet: https://www.kaggle.com/datasets/renanmav/imdb-movie-review-dataset
 
 # Pre Trained Word Embedding
